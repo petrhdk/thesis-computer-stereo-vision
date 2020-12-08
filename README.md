@@ -4,7 +4,7 @@
 + [Paper/Dokumentation](1_bell_dokumentation_(paper)/Dokumentation.pdf)
 + [Präsentation](2_präsentation/2020-05%20-%20BeLL%20Haiduk.pdf)
 + [Ergebnis-Video](3_ergebnis_video/visualisierung_all.mp4)
-+ [Jugend Forscht Poster](3D-Lokalisierung%20nicht-motorisierter%20Verkehrsteilnehmer%20mittels%20Computer%20Stereo%20Vision.pdf)
++ [Jugend Forscht Poster](4_jugend_forscht_poster/3D-Lokalisierung%20nicht-motorisierter%20Verkehrsteilnehmer%20mittels%20Computer%20Stereo%20Vision.pdf)
 
 <br>
 
