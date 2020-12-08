@@ -17,7 +17,7 @@
 Sehr ambitioniert arbeitete ich an diesem Forschungprojekt, das ganze Jahr 2019 lang ^^  
 Organisatorische und inhaltiche Unterstützung kam von [Vincent Latzko](https://cn.ifn.et.tu-dresden.de/chair/staff/vincent-latzko/) am [Deutsche Telekom Lehrstuhl für Kommunikationsnetze](https://cn.ifn.et.tu-dresden.de) am Institut für Nachrichtentechnik der [Technischen Universität Dresden](https://tu-dresden.de) 👌
 
-Am 20.12.2019 reichte ich die Dokumentation bei der Oberstufen-Leitung meines Gymnasiums ([Martin-Andersen-Nexö-Gymnasium Dresden](https://manos-dresden.de)) ein und präsentierte sie im Mai 2020 dem Kolloqium, sodass ich das Projekt als Besondere Lernleistung (BeLL) in meine Abitur-Wertung einbringen konnte.
+Am 20.12.2019 reichte ich die Dokumentation bei der Oberstufen-Leitung meines Gymnasiums ([Martin-Andersen-Nexö-Gymnasium Dresden](https://manos-dresden.de)) ein und präsentierte sie im Mai 2020 dem Kolloqium, sodass ich das Projekt als Besondere Lernleistung (BeLL) mit voller Punktzahl in meine Abitur-Wertung einbringen konnte.
 
 Schließlich erhielt ich auch noch die Möglichkeit, mit meiner Forschungsarbeit am "Jugend Forscht" Wettbewerb teilzunehmen, und [gewann](https://jufo-dresden.de/projekt/teilnehmer/technik/T4) am 06.02.2020 den 1. Platz in der Regionalrunde im Bereich Technik, plus einen Sonderpreis für "Zerstörungsfreie Prüfung" der DGZfP e.V. :P  
 Wegen der Covid-Pandemie fielen die weiterführenden Runden leider aus.
