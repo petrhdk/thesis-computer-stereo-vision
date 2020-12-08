@@ -1,0 +1,137 @@
+Bevor man in \ref{subsec:triangulation} (\emph{Triangulation}) schließlich den Bildentstehungsprozess umkehren kann, müssen alle inneren ($K$) und äußeren ($\mathsf{X}_0$, $R$) Parameter beider Kameras bekannt sein. Sie werden durch eine Kalibrierung erlangt. Dazu soll der sogenannte Algorithmus \en{Direct Linear Transform} (\en{DLT}) verwendet werden. Er bezieht sich direkt auf die schon hergeleiteten Gleichungen aus \ref{subsec:bezugssysteme_bildentstehung} (\emph{Bezugssysteme und Bildentstehung}) und eignet sich deswegen sehr gut, um nicht den Rahmen dieser Arbeit auszureizen. Die Kalibrierung wird für jede Kamera individuell durchgeführt.
+
+Als Grundlage für die Kalibrierung benötigt der \en{DLT}-Algorithmus ein Bild der zu kalibrierenden Kamera, sowie die Position einiger (allgemein: $I$ Stück) spezieller Ka\-li\-brie\-rungs-Punkte auf diesem Bild und die entsprechenden Welt-Koordinaten dieser.
+{\noindent}Es gilt dann zunächst die gesamte Projektionsmatrix $P_{3{\times}4}$ näherungsweise zu ermitteln, im Anschluss lassen durch das Wissen über ihre Zusammensetzung alle benötigten inneren und äußeren Parameter extrahieren.\kleinerabstand
+
+Die Projektionsmatrix $P$ wird zunächst allgemein notiert. 
+\begin{equation}
+	\boldsymbol{P} {\:\:}={\:\:} \begin{pmatrix}p_1&p_2&p_3&p_4\\p_5&p_6&p_7&p_8\\p_9&p_{10}&p_{11}&p_{12}\\\end{pmatrix}
+\end{equation}
+$\mathrm{X}$ und $\mathrm{x}$ seien die homogenen Koordinaten eines Ka\-li\-brie\-rungs-Punktes in der Welt und auf dem Sensor.
+\begin{align*}
+	{\xH} {\:\:}&={\:\:} \boldsymbol{P}\cdot\XH\\
+	\begin{pmatrix}x\\y\\1\\\end{pmatrix} {\:\:}&={\:\:} \begin{pmatrix}\begin{pmatrix}p_1&p_2&p_3&p_4\\\end{pmatrix}\cdot\XH\\\begin{pmatrix}p_5&p_6&p_7&p_8\\\end{pmatrix}\cdot\XH\\\begin{pmatrix}p_9&p_{10}&p_{11}&p_{12}\\\end{pmatrix}\cdot\XH\\\end{pmatrix} \numberthisequation
+\end{align*}
+Mithilfe der Umformung von $\xH$ zu den euklidischen Koordinaten entsprechend Gleichung \ref{eq:einfache_form} ergeben sich für $x$ und $y$ des Kalibrierungspunkts auf dem Sensor:
+\begin{equation}\label{eq:kalibrierungsgleichungxy}
+	x = \frac{\begin{pmatrix}p_1&p_2&p_3&p_4\\\end{pmatrix}\cdot\XH}{\begin{pmatrix}p_9&p_{10}&p_{11}&p_{12}\\\end{pmatrix}\cdot\XH} \qquad\quad y = \frac{\begin{pmatrix}p_5&p_6&p_7&p_8\\\end{pmatrix}\cdot\XH}{\begin{pmatrix}p_9&p_{10}&p_{11}&p_{12}\\\end{pmatrix}\cdot\XH}
+\end{equation}
+Durch jeden Kalibrierungspunkt erhält man also zwei Gleichungen. Aus diesen wird im Folgenden ein Gleichungssystem zusammengesetzt, in dem nur $p_1, \dots, p_{12}$ unbekannt sind, diese sollen ja ermittelt werden. Zunächst müssen die beiden Gleichungen aus \eqref{eq:kalibrierungsgleichungxy} umgeformt werden.
+\begin{equation*}\label{eq:kalibrierungsgleichungaligned}
+	\begin{array}{cccc}
+		-\XH^T\begin{pmatrix}p_1\\p_2\\p_3\\p_4\\\end{pmatrix} & & +x\cdot\XH^T\begin{pmatrix}p_9\\p_{10}\\p_{11}\\p_{12}\\\end{pmatrix} & =0\\
+		& -\XH^T\begin{pmatrix}p_5\\p_6\\p_7\\p_8\\\end{pmatrix} & +y\cdot\XH^T\begin{pmatrix}p_9\\p_{10}\\p_{11}\\p_{12}\\\end{pmatrix} & =0
+	\end{array} \tag{\ref{eq:kalibrierungsgleichungxy}a}
+\end{equation*}
+Das Gleichungsystem soll als Matrizengleichung formuliert werden. Aus diesem Grund werden alle $p_1, \dots, p_{12}$ zu einem Lösungvektor $p_{12{\times}1}$ zusammengefasst.
+\begin{equation}
+	\boldsymbol{p} = \begin{pmatrix}p_1&p_2&p_3&\dots&p_{12}\\\end{pmatrix}^T
+\end{equation}
+Die Gleichungen von \eqref{eq:kalibrierungsgleichungaligned} werden mit $p$ umgeschrieben zu:
+\begin{equation}
+	\begin{array}{r rrr l lll}
+		\left(\right. & -\XH^T, & 0_4^T,  & x\XH^T & \left.\right) & \cdot\: \boldsymbol{p} & = & 0\\
+		\left(\right. & 0_4^T,  & -\XH^T, & y\XH^T & \left.\right) & \cdot\: \boldsymbol{p} & = & 0
+	\end{array} \tag{\ref{eq:kalibrierungsgleichungxy}b}
+\end{equation}
+Das Gleichungssystem in Matrixschreibweise ergibt sich auf triviale Weise dann folgendermaßen:
+\begin{align*}
+	\begin{pmatrix}
+		&\vdots&\\
+		-\XH_i^T & 0_4^T & x_i\XH_i^T\\
+		0_4^T & -\XH_i^T & y_i\XH_i^T\\
+		&\vdots&\\
+	\end{pmatrix}
+	\cdot \boldsymbol{p} {\:\:}&={\:\:} 0
+	\qquad\quad (0 \leq i \leq I) \tag{\ref{eq:kalibrierungsgleichungxy}c}\\
+	\boldsymbol{M}_{2I{\times}12} \:\cdot\: \boldsymbol{p} {\:\:}&={\:\:} 0
+\end{align*}
+
+Für eine eindeutige Lösung von $P$ würden schon 6 Kalibrierungspunkte ausreichen, weil dann die 12 Unbekannten von $2I=12$ Gleichungen gedeckt wären\footnote{genaugenommen würden sogar noch weniger Gleichungen genügen, was nicht ausführlicher betrachtet wird}. Allerdings werden für eine höhere Genauigkeit am besten mehr als 6 Kalibrierungspunkte verwendet und das überbestimmte Gleichungssystem dann mit der \emph{Methode der kleinsten Quadrate}\footnote{eine Näherungslösung eines überbestimmten Gleichungssystem wird durch Minimierung der Fehlerquadrate erhalten} gelöst.\kleinerabstand
+
+{\noindent}Wenn die Koordinaten aller Kalibrierungspunkte mathematisch exakt wären, würde nun auch das überbestimmte Gleichungssystem eine eindeutige Lösung haben. Weil aber diese Annahme beim Kalibrierungsvorgang in der Regel wegen zufälligen, minimalen Messungenauigkeiten nicht zutrifft, hat das Gleichungssystem durch die Überbestimmtheit eigentlich gar keine Lösung. In jedem Fall verbleibt ein Ergebnisvektor $\omega$, der leicht von $0$ abweicht.
+\begin{align}
+	\boldsymbol{M}\cdot\boldsymbol{p} {\:}={\:} \boldsymbol{\omega} {\:}\not=&{\:} 0\\
+	\boldsymbol{\omega}^T  \boldsymbol{\omega} {\:}=&{\:} \boldsymbol{\Omega}
+\end{align}
+Mit der schon genannten Methode der kleinsten Quadrate lässt sich diese Fehler-Quadratsumme $\Omega$ aber minimieren. Ohne auf die mathematischen Hintergründe genauer einzugehen, lässt sich zusammenfassen, dass hierbei eine Singulärwertzerlegung (vgl. Gleichung \ref{eq:singulärwertzerlegung}) auf die Matrix $M$ angewendet wird und anschließend der Rechts-Singulärvektor von $M$, der dem kleinsten Singulärwert zugehörig ist, die beste Näherungslösung darstellt.\kleinerabstand
+
+{\noindent}Es muss darauf geachtet werden, dass die genauen Elementwerte einer Abbildungsmatrix für homogene Koordinaten wegen der beliebigen Skalierbarkeit (vgl. Gleichung \ref{eq:matrix_skalierbarkeit}) uneindeutig sind. Das gilt auch für die gesuchte Matrix $P$. Deswegen wird ohne Beschränkung der Allgemeinheit willkürlich festgelegt, dass $|p|=1$ gilt. Dadurch wird auch gleich die triviale, aber nicht gesuchte, Lösung $p=0$ formal ausgeschlossen.\\
+Jedoch sind diese beiden Bedingungen nur in der Theorie von Bedeutung, damit es aus rein mathematischer Sicht überhaupt eine eindeutige Lösung geben kann. In der praktischen Umsetzung mit der gerade beleuchteten Singulärwertzerlegung entfällt die Lösung $p=0$ ohnehin und es wird trotz der theoretisch unumgänglichen Uneindeutigkeit von $P$ eine beste Näherungslösung für $p$ gefunden, weil die Singulärwertzerlegung die skalare Uneindeutigkeit von $P$ nicht einbezieht. Die gefundene Näherungslösung erfüllt dann im allgemeinen Fall eben nicht genau $|p|=1$, aber stellt einfach ein Vielfaches dieser, theoretisch auf die Norm 1 festgelegten, Zahlenwerte dar und ist damit als Lösung äquivalent.\kleinerabstand
+
+\begin{mdframed}[linewidth=1pt,leftmargin=1cm,rightmargin=1cm]
+%\begin{center}
+%\setlength{\fboxsep}{0.5cm}
+%\fbox{\parbox{.8\columnwidth}{
+	\begin{equation}\label{eq:singulärwertzerlegung}
+		\text{Singulärwertzerlegung:}\qquad \boldsymbol{M} {\:\:}={\:\:} \underset{2I{\times}12}{\boldsymbol{U}} {\:\cdot\:} \underset{12{\times}12}{\boldsymbol{S}} {\:\cdot\:} \underset{12{\times}12}{\boldsymbol{V}^T} \numberthisequation
+	\end{equation}
+	\begin{center}
+		\begin{tabularx}{\linewidth}{l l X}
+			$\boldsymbol{U}$: & orthogonal, & beinhaltet Links-Singulärvektoren als Spalten\\
+			$\boldsymbol{S}$: & Diagonalmatrix, & Hauptdiagonale besteht aus positiven Singulärwerten in absteigender Reihenfolge\\
+			$\boldsymbol{V^T}$: & orthogonal, & beinhaltet Rechts-Singulärvektoren als Zeilen\\
+		\end{tabularx}
+	\end{center}
+%}}
+%\end{center}
+\end{mdframed}\kleinerabstand
+
+\noindent Der kleinste Singulärwert ist damit $s_{12}$, der letzte Wert auf der Hauptdiagonalen von $S$. Und der zugehörige Rechts-Singulärvektor ist $v_{12}$, die letzte Zeile von $V^T$ bzw. die letzte Spalte von $V$. Nach der Methode der kleinsten Quadrate stellt $v_{12}$ damit, wie schon erläutert, die beste Näherungslösung für $p$ dar.
+\begin{align}
+	\boldsymbol{\widehat{p}} {\:\:}&={\:\:} \boldsymbol{v_{12}} {\:\:}={\:\:} \begin{pmatrix}\widehat{p}_1&\widehat{p}_2&\widehat{p}_3&\dots&\widehat{p}_{12}\\\end{pmatrix}^T\\
+	\boldsymbol{\widehat{P}} {\:\:}&={\:\:} \begin{pmatrix}\widehat{p}_1&\widehat{p}_2&\widehat{p}_3&\widehat{p}_4\\\widehat{p}_5&\widehat{p}_6&p_7&\widehat{p}_8\\\widehat{p}_9&\widehat{p}_{10}&\widehat{p}_{11}&\widehat{p}_{12}\\\end{pmatrix}
+\end{align}\mittelgrosserabstand
+
+Aus der erlangten Projektionsmatrix $\widehat{P}$ lassen sich nun ausgehend von dem allgemeinen Aufbau einer Projketionsmatrix $P$ entsprechend Gleichung \ref{eq:zerlegungprojektionsmatrix} die benötigten Parameter $\widehat{K}$, $\widehat{\mathsf{X}}_0$ und $\widehat{R}$ extrahieren.\\
+\begin{align*}
+	\boldsymbol{\widehat{P}} {\:\:}&={\:\:}
+	\boldsymbol{\widehat{K}} \: \boldsymbol{\widehat{R}} \: \begin{pmatrix}E_3 \:\: | \: -\widehat{\XC}_0\\\end{pmatrix} \numberthisequation\\
+	&={\:\:}
+	\begin{pmatrix}\boldsymbol{\widehat{K}}\boldsymbol{\widehat{R}} \:\: | \: -\boldsymbol{\widehat{K}}\boldsymbol{\widehat{R}}\cdot\widehat{\XC}_0\\\end{pmatrix}\\[0.3cm]
+	\text{mit:}\qquad
+	\boldsymbol{H}_{3\times3} {\:\:}&={\:\:} \boldsymbol{\widehat{K}}\boldsymbol{\widehat{R}} \numberthisequation\label{eq:introductionofbigh}\\
+	\boldsymbol{h}_{3\times1} {\:\:}&={\:\:} -\boldsymbol{\widehat{K}}\boldsymbol{\widehat{R}}\cdot\widehat{\XC}_0 \numberthisequation\label{eq:introductionofh}\\[0.3cm]
+\end{align*}
+Aus den Bekannten $H$ und $h$ lässt sich als erstes $\widehat{\mathsf{X}}_0$ ermitteln.
+\begin{align*}
+	\text{aus \eqref{eq:introductionofbigh} und \eqref{eq:introductionofh} folgt:}\qquad
+	\boldsymbol{h} {\:\:}&={\:\:}-\boldsymbol{H}\cdot\widehat{\XC}_0\\
+	\widehat{\XC}_0 {\:\:}&={\:\:} (-\boldsymbol{H})^{-1} \cdot \boldsymbol{h}
+\end{align*}
+Um $\widehat{K}$ und $\widehat{R}$ zu extrahieren zieht man die QR-Zerlegung an, die eine beliebige Matrix $\widetilde{A}_{3\times3}$ vom Rang 3 in das Produkt einer orthogonalen Matrix $\widetilde{Q}_{3\times3}$ und einer oberen Dreiecksmatrix $\widetilde{R}_{3\times3}$ aufspalten kann.
+\begin{equation}
+	\text{QR-Zerlegung:}\qquad \widetilde{A}_{3\times3} {\:\:}={\:\:} \widetilde{Q}_{3\times3} \:\cdot\: \widetilde{R}_{3\times3}
+\end{equation}
+Weil $\widehat{R}$ eine Drehmatrix, und damit orthogonal, und $\widehat{K}$ eine obere Dreiecksmatrix ist, lässt sich die QR-Zerlegung geschickt ausnutzen. Allerdings beeinhaltet $H$ die beiden Matrizen in verkehrter Reihenfolge, um die QR-Zerlegung direkt auf $H$ anzuwenden. Es wird daher zuerst die Inverse von $H$ gebildet.
+\begin{align*}
+	\boldsymbol{H}^{-1}
+	{\:\:}={\:\:}
+	(\boldsymbol{\widehat{K}}\boldsymbol{\widehat{R}})^{-1}
+	{\:\:}={\:\:}
+	\boldsymbol{\widehat{R}}^{\mspace{6mu}-1}\boldsymbol{\widehat{K}}^{\mspace{4mu}-1}
+	{\:\:}={\:\:}
+	\boldsymbol{\widehat{R}}^{\mspace{8mu}T} \boldsymbol{\widehat{K}}^{\mspace{5mu}-1}
+\end{align*}
+Auf $H^{-1}$ kann dann die QR-Zerlegung angewendet werden, da $\widehat{R}^T$ immernoch orthogonal ist, $\widehat{K}^{-1}$ immer noch eine obere Dreiecksmatrix ist und beide jetzt in der richtigen Reihenfolge vorliegen. Man erhält $\widehat{R}$ sowie $\widehat{K}$ durch Bildung der transponierten Matrix bzw. der Inverse.
+\begin{samepage} % braucht man unbedingt!, warum auch immer..
+\begin{align*}
+	\text{QR-Zerlegung:}\qquad \boldsymbol{H}^{-1} \:\implies\: \tikzmark{R}\boldsymbol{\widehat{R}}^{\mspace{8mu}T},\quad \tikzmark{K}\boldsymbol{\widehat{K}}^{\mspace{5mu}-1}
+\end{align*}
+\begin{tikzpicture}[remember picture,overlay]
+  \draw[->] ([shift={(0.2cm,-0.2cm)}]pic cs:R) -- node[left]{$()^T$} ++(0,-1cm) node[below]{$\boldsymbol{\widehat{R}}$};
+  \draw[->] ([shift={(0.2cm,-0.2cm)}]pic cs:K) -- node[right]{$()^{-1}$} ++(0,-1cm) node[below]{$\boldsymbol{\widehat{K}}$};
+\end{tikzpicture}
+\end{samepage}\\[1.7cm]
+
+Zur Kamerakalibrierung muss abschließend noch betrachtet werden, dass es bestimmte kritische Konfigurationen gibt. Das sind räumliche Lagebeziehungen zwischen den Kalibrierungspunkten, die vermieden werden müssen, weil eine Kalibrierung sonst nicht durchführbar wäre. Nach \cite[S. 537]{hartley_zisserman} lassen sich diese kritischen Konfigurationen zu sechs allgemeinen Fällen zusammenfassen.
+\begin{figure}[H]
+	\centering
+	\def\svgwidth{10cm}
+	\import{image/kritische_konfigurationen/}{kritische_konfigurationen.pdf_tex}
+	\caption[Sechs kritische Konfigurationen von Kalibrierungspunkten]{Sechs kritische Konfigurationen von Kalibrierungspunkten nach \cite[S. 537]{hartley_zisserman}, Quelle: \cite[S. 538]{hartley_zisserman}}
+	\label{fig:kritische_konfigurationen}
+\end{figure}
+
+\noindent In diesen Fällen ist die Kameraperspektive rein mathematisch uneindeutig. Wenn die Koordinaten der Kalibrierungspunkte diese Beziehungen exakt erfüllen, ist gar keine Lösung für $P$ möglich. Auch hier gilt wieder, dass durch Messungenauigkeiten diese kritischen Lagebeziehungen in der Regel nie genau vorliegen werden. Sie sind trotzdem strengstens zu meiden, denn auch bei einer annähernd kritischen Konfiguration tritt die Uneindeutigkeit in Kraft, indem sie die Messungenauigkeiten enorm amplifiziert. Die erhaltene Projektionsmatrix $P$ wäre dann nahezu willkürlich oder zumindest stark fehlerbehaftet und damit in der Praxis nicht einsetzbar.\\
+Der häufigste Fehler wäre, alle Kalibrierungspunkte auf der Erdoberfläche zu wählen. Sie würden dann alle annähernd in einer Ebene liegen und soeben beschriebene Effekte träten in Kraft. Darauf muss bei der Entwicklung des Prototyps\footnote{Referenz} geachtet werden.

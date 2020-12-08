@@ -1,0 +1,20 @@
+Um die Funktionsfähigkeit des Prototyps anhand des konkreten Versuches beurteilen zu können, erwies es sich als sinnvoll, die vom Programmcode ausgegebenen Objekt-Detektionen und die dreidimensionalen Positionen der Verkehrsteilnehmer zunächst zu visualisieren.\\
+Der Programmcode wurde daher dazu erweitert, die einzelnen Kamerabilder mit den darauf gezeichneten Detetektionen wieder als Video-Datei auszugeben. Dies geschah für beide Kameras.\\
+Für die Visualisierung der Ortungs-Informationen hat sich hingegen die Anwendung \emph{Blender} \cite{blender} angeboten, weil sie enorm funktionsreich und leistungsstark für 3D-Modellierung und -Rendering einsetzbar und gleichzeitig kostenlos und quelloffen ist. Mit ihr sollte eine 3D-Animation der Szene mit ihren bekannten Objekten, speziell den dynamisch erkannten und georteten Verkehrsteilnehmern, aber auch den statischen Kameras und Kalibrierungspunkten zur Orientierungshilfe, erstellt werden. Zum Darstellen der Objekte der Szene wurde ein in \emph{Blender} ausführbares Python-Skript geschrieben, dass diese an ihrem entsprechendem Zeitpunkt des Auftretens unter Nutzung von \en{Keyframes} in eine dreidimensionale Render-Szene einfügt und mit farbigen Geraden beziehungsweise Kugeln sichtbar macht. Die entstehende Animation ist wiederum als Video exportierbar.\kleinerabstand
+
+\begin{figure}[H]
+	\centering
+	\def\svgwidth{13.5cm}
+	\import{image/visualisierung/}{visualisierung.pdf_tex}
+	\caption{Standbild der erhaltenen Visualisierung}
+	\label{fig:xvisualisierung_all_sample_frame}
+\end{figure}
+\kleinerabstand
+
+Mit der vorliegenden visuellen Auswertung der Ergebnisse des Versuches lässt sich die Potenz des Prototyps schließlich gut beurteilen.\kleinerabstand
+
+\noindent Da ist als erstes hervorzuheben, dass es dem System im konkreten Anwendungsfall sehr gut gelingt, den zu sehenden Fahrradfahrer kontinuierlich in den Kamerabildern zu erkennen, und auch das dreidimensionale Verorten funktioniert einwandfrei. Dies ist daher abzuleiten, dass bei der gleichzeitigen Betrachtung der drei Auswertungs-Videos das Heranrollen des Fahrradfahrers genau mit der Bewegung des in der 3D-Animation visualisierten georteten Objekts übereinstimmt. Dabei tritt auch wenig zufällige Bewegung der lokalisierten Position des Verkehrsteilnehmers aufgrund etwaiger Ungenauigkeiten bei der Objekterkennung oder in der Kalibrierung auf, welche durch ein starkes Zittern der Visualisierung in der Animation erkennbar wäre.\kleinerabstand
+
+\noindent Es zeigten sich allerdings auch Problemstellen auf.\\
+So ist es dem Erkennungsalgorithmus zum einen nicht durchweg möglich, den in der Szene zentralen Fahrradfahrer zuverlässig zu erkennen. Dies ist dem Fakt geschuldet, dass auf künstlicher Intelligenz beruhende Objekterkennungsalgorithmen immer eine gewisse Ungenauigkeit in ihrer Erkennung aufweisen. Im konkreten Fall spielte sicherlich auch eine große Rolle, dass der von den Kameras abgedeckte Sichtbereich sehr groß war, und demnach der vom Fahrradfahrer eingenommene Bildbereich sehr klein und weniger scharf aufgelöst. Dies vermindert die Informationsgrundlage für den Erkennungsalgorithmus. Zuletzt ist auch die Blickperspektive der rechten Kamera auf den Fahrradfahrer, die im konkreten Fall ungünstiger Weise sehr frontal ausfällt, für die Lücken in der Erkennung verantwortlich zu machen.\\
+Zum anderen ist auch die Laufzeit des Programmcodes kritisch zu betrachten. Für die Ermittlung der Detektionen und die 3D-Ortung benötigte das Programm durschnittlich $4,2s$ \footnote{bei der Ausführung auf einem Laptop aus dem privaten Haushalt}. Jener Umstand ergibt sich daraus, dass der Erkennungsalgorithmus enorm hohen Ressourcenbedarf bei der Verarbeitung von großen Bildern aufweist, wie sie wegen der benannten relativ gesehen kleinen Größe der Verkehrsteilnehmer auf den Kamerabildern eingesetzt wurden mussten.\kleinerabstand

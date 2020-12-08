@@ -1,0 +1,15 @@
+\noindent Nachdem der implementierte Erkennungsalgorithmus für alle erkannten Objekte je die Position und Größe eines das Objekt umschließenden Rechtecks und die Objektklasse\footnote{abhängig von der Implementation und dem Training des Algorithmus' stehen meist Objektklassen wie ``Fahrradfahrer'', ``Person'', ``Auto'', ``Katze'' etc. zur Erkennung bereit} der Detektion ausgegeben hat, folgt im Programm das Abgleichen der Entdeckungen\footnote{en.: \en{Correspondence Matching}} zwischen den beiden Bildern. Zur nachfolgenden Ortung muss nämlich klar sein, welche beiden Entdeckungen zusammengehören.\\
+Das Problem wird deutlich, wenn man sich vorstellt in der Verkehrssituation befänden sich mehrere Fahrradfahrer. Dem Programm muss eine Möglichkeit gegeben werden, zu entscheiden, welche Entdeckung eines Fahrradfahrers im einen Bild zu welcher im zweiten Bild geordnet werden soll. Ohne klare Bildpositionspaare könnte letztendlich keiner der Fahrradfahrer geortet werden.
+
+\begin{figure}[H]
+	\centering
+	\def\svgwidth{12cm}
+	\import{image/zuordnungsproblem/}{zuordnungsproblem.pdf_tex}
+	\caption{Zuordnungsproblem}
+	\label{fig:zuordnungsproblem}
+\end{figure}
+
+Deswegen wird der in \ref{subsec:komplanaritätsbedingung} (\emph{Komplanaritätsbedingung}) beschriebene Schnittwinkel als Maß für die Erfüllung der Komplanaritätsbedingung auf alle potenziellen Entdeckungs-Paare angewendet. Für eine Detektion des einen Kamerabildes wird die entsprechende Partner-Detektion nun entsprechend des kleinsten Schnittwinkels gewählt, solange dieser noch in einem frei definierbaren Toleranzbereich\footnote{der Toleranzbereich muss abhängig von der Genauigkeit der Kalibrierung und des Erkennungsalgorithmus' gewählt werden} liegt. Durch den Toleranzbereich wird gewährleistet, dass das Programm nicht irrtümlich einen falschen Partner wählt, nur weil der richtige Partner auf dem anderen Bild zufällig gar nicht erkannt wurde.\kleinerabstand
+
+\noindent Sowohl für die Berechnung des Schnittwinkels zu einem Detektions-Paar, als auch für die in Kürze folgende Ortung eines Verkehrsteilnehmers aus einem Detektions-Paar werden die Richtungsvektoren gebraucht, die vom jeweiligen Kameraprojektionszentrum hin zu dem gesehenen Objekt zeigen.\\
+Für die Ermittlung dieser sind eindeutige Pixel-Positionen der Entdeckungen auf den Bildern notwendig. Diese sind, wie in Abbildung \ref{fig:stereo_vision} zu erkennen, näherungsweise durch die Mittelpunkte der vom Erkennungsalgorithmus ausgegebenen Erkennungsrechtecke gegeben.\kleinerabstand

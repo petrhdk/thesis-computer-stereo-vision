@@ -1,0 +1,19 @@
+Das Ziel der Arbeit ist es, einen Prototypen für die automatisierte optische Erfassung und dreidimensionale Ortung von nicht-motorisierten Verkehrsteilnehmern mithilfe von zwei Verkehrskameras zu entwickeln.\mittelgrosserabstand
+
+\begin{figure}[H]
+	\centering
+	\def\svgwidth{\columnwidth}
+	\import{image/stereo_vision/}{stereo_vision.pdf_tex}
+	\caption{Grundkonzept der dreidimensionalen Ortung eines Objekts aus der Grundlage von zwei Kamerabildern (\en{Stereo Vision})}
+	\label{fig:stereo_vision}
+\end{figure}\kleinerabstand
+
+Die nicht-motorisierten Verkehrsteilnehmer sollen mithilfe eines offen, auf \en{Deep Learning} basierenden \en{Object Detection Algorithmus'} erkannt, das heißt detektiert und klassifiziert, werden. Es werden zwei Kameras eingesetzt, in dessen beiden Bildern diese Erkennung fortlaufend stattfindet. Durch die Kenntnis über alle Eigenschaften der beiden Kameras (innere Parameter, genaue Position und Orientierung) lässt sich dann die räumliche Position des gesehenen Verkehrsteilnehmers rückermitteln (en.: \en{Stereo Vision}). Dazu werden zwei Kameras benötigt, weil unter Nutzung einer einzelnen Kamera noch keine Tiefeninformationen über das gesehene Objekt der Szene ermittelt werden kann, sondern nur ein gerichteter Strahl auf dem dieses sich befinden muss.\kleinerabstand
+
+Im Mittelpunkt der Arbeit steht das Erarbeiten der für den Prototyp notwendigen mathematischen Grundlagen\footnote{vgl. Kapitel \ref{chap:theoretische_grundlagen} (\emph{Theoretische Grundlagen})}. Dabei wird in erster Linie die beschriebene dreidimensionale Ortung eines Objekts auf der Grundlage von zwei überlappenden Kamerabildern. Essentiell sind aber auch die Betrachtungen zur Kamerakalibrierung mithilfe von ausgemessenen Kalibrierungspunkten und zum Ordnen der in den Kamerabildern gefundenen Verkehrsteilnehmer zu korrespondierenden Paaren zwischen den Kamerabildern (en.: \en{Correspondence Matching}).\kleinerabstand
+
+\noindent Aus den Grundlagen ableitend soll im Anschluss das Prototypenkonzept erarbeitet werden, welches die allgemeine Funktionalität des Systems in theoretischer Weise beschreibt.\kleinerabstand
+
+\noindent Weiterhin wird als Anwendungstest des entwickelten Prototyps ein Versuch in einer konkreten Verkehrssituation geplant, durchgeführt und ausgewertet. Hierfür wird der Programmcode in Python implementiert.\kleinerabstand
+
+Der entwickelte Prototyp soll zukünftig im Rahmen der \en{Car2Infrastructure Communication} Anwendung finden können, indem motorisierte Verkehrsteilnehmer, wie beispielsweise das Auto, Warninformationen von dem System über nicht-motorisierte Verkehrsteilnehmer in unmittelbarer Nähe erhalten, die sonst leicht übersehen werden können. Durch die genau ermittelten dreidimensionalen Koordinaten könnten die gefährdeten Verkehrsteilnehmer in Autos zum Beispiel mit einem auf die Windschutzscheibe projizierten Overlay markiert werden.

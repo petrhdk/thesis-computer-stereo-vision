@@ -1,0 +1,47 @@
+Die Komplanaritätsbedingung sagt, dem Namen entsprechend, aus, dass die Verbindungsstrecke der beiden Kameraprojektionszentren (``Basisstrecke'') mit den beiden Halbgeraden\footnote{es ist von den Halbgeraden die Rede, die jeweils von einem Kameraprojektionszentrum aus in die Richtung verlaufen, in der das gesehene Objekt liegt} der Kameras in einer Ebene liegt. Diese Bedingung ergibt sich aus dem Umstand, dass die beiden Kameraprojektionszentren mit dem beobachteten Punkt ein Dreieck darstellen, welches immer eben ist (vgl. Abbildung \ref{fig:epipolargeometrie}). Die Verbindungsvektoren zwischen diesen drei Punkten, beziehungsweise Vielfache davon, müssen daher in einer Ebenen liegen.\\
+Als Gleichung kann dieser Zusammenhang mithilfe des Kreuzprodukts und des Skalarprodukts ausgedrückt werden. Die euklidischen Koordinaten des Kameraprojektionszentrums $\mathsf{X}'_0$, $\mathsf{X}''_0$ sowie die Richtungsvektoren der Halbgeraden $a$, $b$ sind aus dem Unterkapitel \ref{subsec:kamerakalibrierung} (\emph{Kamerakalibrierung}) beziehungsweise \ref{subsec:triangulation} (\emph{Triangulation}) bekannt.
+\begin{equation}\label{eq:koplanaritätsbedingung}
+	\boldsymbol{a} \times (\XC'_0-\XC''_0) \cdot\boldsymbol{b}  \:\:=\:\: 0
+\end{equation}\kleinerabstand
+
+Zum \en{Correspondence Matching} kann die Komplanaritätsbedingung dann insofern eingesetzt werden, als dass simpel geprüft wird, ob sie zutrifft ist. Ein nicht korrespondierendes Paar kann auf diese Weise in vielen Fällen einfach ausgeschlossen werden.\kleinerabstand
+
+\noindent Allerdings muss auch hier wieder beachtet werden, dass sich die beiden Halbgeraden wegen zufälligen, minimalen Messungenauigkeiten bei der Kalibrierung und beschränkt genauer Lokalisierung durch den \en{Object Detection Algorithmus} in der Regel immer windschief zueinander verhalten, also gerade so nicht mit der Basisstrecke zusammen in einer Ebene liegen\footnote{vgl. Abbildung \ref{fig:triangulation}}.\\
+Statt die Komplanaritätsbedingung wie in \eqref{eq:koplanaritätsbedingung} gesetzmäßig, exakt zu prüfen, sollte daher viel eher ein Maß dafür gefunden werden, wie gut, beziehungsweise schlecht, die Komplanaritätsbedingung erfüllt ist.
+Es bietet sich an, den Winkel zu ermitteln, mit dem die eine Halbgerade die Ebene schneidet, in der die andere Halbgerade und die Basisstrecke liegen. Später kann dann geprüft werden, ob sich dieser Winkel in einem definierten Toleranzbereich befindet.\kleinerabstand
+
+\begin{mdframed}[linewidth=1pt,leftmargin=1cm,rightmargin=1cm]
+%\begin{center}
+%\setlength{\fboxsep}{0.7cm}
+%\fbox{\parbox{.8\columnwidth}{
+	{\noindent}Bei der Berechnung des Schnittwinkels eines divergenten Richtungsvektors $s$ zu einer Ebene $E (e1, e2)$ wird der geometrische Zusammenhang ausgenutzt, dass sich der Winkel zwischen $s$ und dem zur $E$ senkrechten Richtungsvektor $e_1 \times e_2$ mit dem gesuchten Schnittwinkel $alpha$ genau zu $90^\circ$ ergänzen.\kleinerabstand
+	
+	\begin{center}
+		%\centering
+		\def\svgwidth{7cm}
+		\import{image/schnitt/}{schnitt.pdf_tex}
+		%\caption{[Skizze dazu]}
+		%\label{fig:schnitt}
+	\end{center}
+	
+	Ausgehend von dem noch vorzeichenbehafteten Schnittwinkel $\tilde{\alpha}$ und seinem Komplementwinkel\footnote{zwei Komplementwinkel ergänzen sich zu $90^\circ$} gilt ausgehend von der Definition des Skalarprodukts:
+	\begin{equation}
+		\sin\tilde{\alpha} \:\:=\:\: \cos\:(90^\circ-\tilde{\alpha}) \:\:=\:\: \frac{\boldsymbol{e_1}\times\boldsymbol{e_2} \cdot\boldsymbol{s}}{|\boldsymbol{e_1}\times\boldsymbol{e_2}|\cdot|\boldsymbol{s}|}
+	\end{equation}
+	Denn:
+	\begin{equation}
+		\boldsymbol{e_1}\times\boldsymbol{e_2} \cdot\boldsymbol{s} = |\boldsymbol{e_1}\times\boldsymbol{e_2}|\cdot|\boldsymbol{s}| \cdot\cos\:(90^\circ-\tilde{\alpha})
+	\end{equation}
+	Der Schnittwinkel ergibt sich nun durch Anwendung der Umkehrfunktion Arkussinus und abschließend der Betragsbildung, da Schnittwinkel allgemein positiv angegeben werden.
+	\begin{equation}
+		\alpha \:\:=\:\: \left|\:\: \arcsin\:\frac{\boldsymbol{e_1}\times\boldsymbol{e_2} \cdot\boldsymbol{s}}{|\boldsymbol{e_1}\times\boldsymbol{e_2}| |\boldsymbol{s}|} \:\right|
+	\end{equation}
+%}}
+%\end{center}
+\end{mdframed}
+
+{\noindent}Angewendet auf die vorliegende Epipolargeometrie ($\mathsf{X}'_0$, $\mathsf{X}''_0$, $a$, $b$)\footnote{vgl. Abbildung \ref{fig:epipolargeometrie}} ergibt sich damit der Schnittwinkel $\alpha$ nach:
+\begin{equation}
+	\alpha \:\:=\:\: \left|\:\: \arcsin\:\frac{\boldsymbol{a}\times(\XC''_0-\XC'_0) \cdot\boldsymbol{b}}{|\boldsymbol{a}\times(\XC''_0-\XC'_0)|\cdot|\boldsymbol{b}|} \:\right|
+\end{equation}
+

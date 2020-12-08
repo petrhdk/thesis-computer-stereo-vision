@@ -1,0 +1,30 @@
+Als nächster Schritt, um dann im anschließenden Unterabschnitt letztendlich zu den euklidischen Koordinaten im lokalen Bezugssystem zu gelangen, muss zunächst die Umwandlungen zwischen Kugelkoordinaten und euklidischen Koordinaten innerhalb des globalen Bezugssystems betrachtet werden.\\
+Dazu werden einfach die kartesischen Koordinatenachsen so gelegt, dass der Ursprung des euklidischen Koordinatensystems im Ursprung des Kugelkoordinatensystems liegt, die X-Achse in der Äquatorebene auf den Nullmeridian zeigt, sich die Y-Achse dazu senkrecht ebenfalls in der Äquatorebene befindet und die Z-Achse in Richtung des Nordpols deutet.
+
+\begin{figure}[H]
+	\centering
+	\def\svgwidth{9.5cm}
+	\import{image/kugel_euklidisch/}{kugel_euklidisch.pdf_tex}
+	\caption{Globales Kugelkoordinatensystem mit globalem euklidischen Koordinatensystem}
+	\label{fig:kugel_euklidisch}
+\end{figure}
+
+Nach grundlegenden Sätzen der Trigonometrie ergibt sich die Umrechnung zwischen beiden Koordinatensystemen:
+
+\begin{center}
+	\begin{tabular}{l P{2cm} l}
+		\textbf{Kugelkoordinaten} & & \textbf{euklidische Koordinaten}\\[0.2cm]
+		Radius: $r$ && $X = r \sin\theta \cos\varphi$\\
+		Polarwinkel: $\theta$ & $\Longrightarrow$ & $Y = r \sin\theta \sin\varphi$\\
+		Azimutwinkel: $\varphi$ && $Z = r \cos\theta$\\
+	\end{tabular}
+\end{center}\kleinerabstand
+
+\begin{center}
+	\begin{tabular}{c P{2cm} l}
+		\textbf{euklidische Koordinaten} & & \textbf{Kugelkoordinaten}\\[0.2cm]
+		$X$  && Radius: $r = \sqrt{X^2+Y^2+Z^2}$ \\
+		$Y$ & $\Longrightarrow$ & Polarwinkel: $\theta = \arccos\frac{Z}{r}$\\
+		$Z$ && Azimutwinkel: $\varphi = \arctan\frac{Y}{X}$\\
+	\end{tabular}
+\end{center}

@@ -1,0 +1,31 @@
+Als Kameramodell für die Bildentstehung wird in der projektiven Geometrie häufig die Lochkamera betrachtet. Eine Lochkamera besteht aus einer unendlich kleinen Blende und einem Schirm. Es ist eine Vereinfachung, deren Hauptmerkmal es ist, dass alle einfallenden Lichtstrahlen sich in einem zentralen Punkt, dem Projektionszentrum, schneiden und auf dem gesamten Weg vom Gegenstandspunkt zum Bildpunkt gerade verlaufen.%eine ideale Eins-zu-Eins-Beziehung zwischen Gegenstandspunkt und Bildpunkt herrscht:
+
+\begin{figure}[H]
+	\centering
+	\def\svgwidth{10cm}
+	\import{image/lochkamera/}{lochkamera.pdf_tex}
+	\caption[Lochkamera-Modell]{Lochkamera-Modell;\\ die Kamerakonstante $c$ stellt den Abstand zwischen Projektionszentrum und Schirm dar}
+	\label{fig:lochkamera}
+\end{figure}
+
+\noindent Bei vielen heutigen Kameras ist diese Vereinfachung nur schwach fehlerbehaftet und damit als Modell anwendbar, weil diese über eine kleine Blende, wenn auch nicht unendlich klein, wie die Lochkamera verfügen. Und sogar unter Vernachlässigung der kleinen Blende, sind die Eigenschaften des Lochkameramodells immer noch erfüllt, wenn man das Linsensystem der Kamera zu einer einzigen dünnen Linse vereinfacht und annimmt, dass alle beobachteten Objekten in der scharfgestellten Gegenstands-Ebene liegen. Das Modell weist erst dann grobe Fehler auf, wenn es auf Kameras mit stark Bild-verzerrenden Kameraobjektiven, wie zum Beispiel dem Fischaugenobjektiv, angewendet wird.
+
+\begin{figure}[H]
+	\centering
+	\def\svgwidth{10cm}
+	\import{image/strahlengang/}{strahlengang.pdf_tex}
+	\caption[Anwendbarkeit des Lochkamera-Modells auf eine einfache Linsenkamera]{Anwendbarkeit des Lochkamera-Modells auf eine einfache Linsenkamera, nachvollziehbar über den jeweiligen Mittelpunktstrahl}
+	\label{fig:strahlengang}
+\end{figure}
+
+\noindent Daher darf im Weiteren das Modell der Lochkamera genutzt werden und für den Prototyp wird darauf geachtet, diesem Modell möglichst getreue Exemplare zu wählen (vgl. Kapitel \ref{subsec:installation_kalibrierung} (\emph{Installation und Kalibrierung})).\mittelgrosserabstand
+
+Bei einer Lochkamera entsteht das Bild auf dem Schirm, der sich hinter der Blende befindet. Es stellt allerdings eine große Vereinfachung für die Vorstellung und die Gleichungen dar, wenn man sich den Schirm in gleichem Abstand zur Blende, aber vor dieser, vorstellt. Dann wäre das Bild auf diesem Schirm nämlich aufrecht und nicht seitenverkehrt.
+
+\begin{figure}[H]
+	\centering
+	\def\svgwidth{10cm}
+	\import{image/kamera_stile/}{kamera_stile.pdf_tex}
+	\caption[Normales Lochkameramodell und vereinfachtes Lochkameramodell mit umgeklappter Bildebene]{Normales Lochkameramodell (oben) und vereinfachtes Lochkameramodell mit umgeklappter Bildebene (unten)}
+	\label{fig:kamera_stile}
+\end{figure}

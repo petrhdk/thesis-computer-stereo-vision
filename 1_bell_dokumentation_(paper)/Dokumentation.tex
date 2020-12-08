@@ -1,0 +1,185 @@
+% --- PREAMBLE ----------------------------------------
+\documentclass[a4paper,12pt]{report}
+\usepackage[right=3cm,bottom=3cm, top=3cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[english, ngerman]{babel} % letzte ist main language
+\usepackage{csquotes} % biblatex says its needed for german language
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{transparent} % laut Latex-Tutorial: braucht man das für eingebundene Vektorgrafiken
+\usepackage{import} % import svg later, http://tug.ctan.org/tex-archive/info/svg-inkscape/InkscapePDFLaTeX.pdf
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[sortlocale=auto, sorting=none]{biblatex} % neuere Version vom Standard-BibTex
+\addbibresource{literature/Literatur.bib}
+\usepackage{float} % fügt Option H [ganz genau dort] für figures hinzu
+\usepackage[hang]{footmisc}	% mehrzeilige Fußnoten schön einrücken +  Einzug (siehe COMMANDS)
+\usepackage{chngcntr} % für Modifikation des Equation-Counters, installiert \counterwithin \counterwithout
+%\usepackage{tocloft} % macht Gleichungsverzeichnis möglich
+\usepackage[hidelinks]{hyperref} % kreirt automatisch Hyperlinks im PDF für Inhaltsverzeichnis und Fußnoten, "hypertexnames=false" macht dass es sich bei zurücksetzen des Kapitel-counters nicht nach den Zahlen richtet und falsch verlinkt (nicht mehr in Benutzung)
+\usepackage{array} % für eigenen tabular column type (siehe COMMANDS P)
+\usepackage{xfrac} % diagonale Bruchstriche
+\usepackage{color}
+\usepackage{tabularx} % ermöglicht Tabellen mit X Spalte (füllt Dokumentenbreite)
+\usepackage{tikz}
+\usetikzlibrary{tikzmark} % \tikzmark{} für overlay reference nodes im text, um später Pfeile zu zeichnen
+\usepackage[format=hang,width=10cm]{caption}
+\usepackage{minted} % syntax highlighting using pygments
+\usepackage[all]{nowidow} % automatically prevents widow lines
+\usepackage{mdframed}
+\usepackage{titlesec}	% erlaubt den Befehl \titelformat (Bearbeitung des Überschriften-Formats bei Selbstständigkeitserklärung, Anhang, und so; da müssen die Nummern weg)
+
+
+% --- COMMANDS ----------------------------------------
+\newcommand{\kleinerabstand}{\vspace{0.3cm}}
+\newcommand{\mittelgrosserabstand}{\vspace{0.75cm}}
+\newcommand{\grosserabstand}{\vspace{1.2cm}}
+\newcommand{\en}[1]{\foreignlanguage{english}{\emph{#1}}}  % Shortcut für englische Fremdwörter
+\makeatletter
+\def\input@path{{./}{./text/}}  % relativer Pfad für eingebetteten Inhalt
+\def\@makechapterhead#1{  % Formatierung von Kapitelüberschriften
+  \vspace*{50\p@}
+  {\parindent \z@ \raggedright \normalfont
+    \interlinepenalty\@M
+    \Huge\bfseries  \thechapter\quad #1\par\nobreak
+    \vskip 40\p@
+  }}
+\makeatother
+\newcommand{\x}{\boldsymbol{x}}
+\newcommand{\X}{\boldsymbol{\mathcal{X}}}
+\newcommand{\xC}{\boldsymbol{\mathsf{x}}}
+\newcommand{\XC}{\boldsymbol{\mathsf{X}}}
+\newcommand{\xH}{\boldsymbol{\mathrm{x}}}
+\newcommand{\XH}{\boldsymbol{\mathrm{X}}}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}} % im Gegensatz zu p: center
+\newcommand{\numberthisequation}{\stepcounter{equation}\tag{\theequation}} % in align* eine Gleichung doch nummerieren
+\definecolor{mygray}{rgb}{0.5, 0.5, 0.5}
+\definecolor{myblue}{RGB}{0, 0, 200}
+\definecolor{mybg}{RGB}{242,242,242}
+%\newcommand{\comment}[1]{\iffalse #1 \fi}
+\setlength{\footnotemargin}{.3cm}  % setzt Einzug für Fußnoten
+
+
+%\newcommand{\listequationsname}{Formelverzeichnis}	% Formelverzeichnis
+%\newlistof{equations}{equ}{\listequationsname}
+%\newcommand{\equations}[1]{\addcontentsline{equ}{equations}{\protect\numberline\indent{\theequation\space}#1}}
+
+
+% --- DOCUMENT ----------------------------------------
+\begin{document}
+%\counterwithout{equation}{chapter}
+%\counterwithout{figure}{chapter}
+%\linespread{1.0} % Standard: 1.5
+%\setlength{\parindent}{12pt} % Indentierung eines Absatzes (Standardwert: 15pt)
+\pagenumbering{gobble} % Seitennummerierung deaktivieren
+
+\begin{titlepage}
+	\input{Titlepage}
+\end{titlepage}
+
+\input{Kurzfassung}\newpage
+\input{Abstract}\newpage
+
+\pagenumbering{arabic} % Seitennummerierung aktivieren
+\tableofcontents
+\listoffigures
+% Formelverzeichnis?? xD
+
+
+\chapter{Allgemeines}
+	\section{Motivation}
+		\input{Allgemeines-Motivation}
+	\section{Zielstellung}
+		\input{Allgemeines-Zielstellung}
+\chapter{Theoretische Grundlagen}\label{chap:theoretische_grundlagen}
+	\section{Projektive Geometrie}\label{sec:projektive_geometrie}
+		\input{TheoretischeGrundlagen-ProjektiveGeometrie}
+		\subsection{Kameramodell}\label{subsec:kameramodell}
+			\input{TheoretischeGrundlagen-ProjektiveGeometrie-Kameramodell}
+		\subsection{Homogene Koordinaten}\label{subsec:homogene_koordinaten}
+			\input{TheoretischeGrundlagen-ProjektiveGeometrie-HomogeneKoordinaten}
+		\subsection{Bezugssysteme und Bildentstehung}\label{subsec:bezugssysteme_bildentstehung}
+			\input{TheoretischeGrundlagen-ProjektiveGeometrie-BezugssystemeBildentstehung}
+		\subsection{Kamerakalibrierung}\label{subsec:kamerakalibrierung}
+			\input{TheoretischeGrundlagen-ProjektiveGeometrie-Kamerakalibrierung}
+		\subsection{Triangulation}\label{subsec:triangulation}
+			\input{TheoretischeGrundlagen-ProjektiveGeometrie-Triangulation}
+	\section{Epipolargeometrie}\label{sec:epipolargeometrie}
+		\input{TheoretischeGrundlagen-Epipolargeometrie}
+		\subsection{Komplanaritätsbedingung}\label{subsec:komplanaritätsbedingung}
+			\input{TheoretischeGrundlagen-Epipolargeometrie-Komplanaritätsbedingung}
+	\section{Kugelkoordinaten und ihre Transformationen}\label{sec:kugelkoordinaten_und_ihre_transformationen}
+		\input{TheoretischeGrundlagen-KugelkoordinatenUndIhreTransformationen}
+		\subsection{Kugelkoordinaten und geographische Koordinaten}
+			\input{TheoretischeGrundlagen-KugelkoordinatenUndIhreTransformationen-KugelkoordinatenUndGeographischeKoordinaten}
+		\subsection{Kugelkoordinaten und euklidische Koordinaten}
+			\input{TheoretischeGrundlagen-KugelkoordinatenUndIhreTransformationen-KugelkoordinatenUndEuklidischeKoordinaten}
+		\subsection{Globales und Lokales Bezugssystem}
+			\input{TheoretischeGrundlagen-KugelkoordinatenUndIhreTransformationen-GlobalesUndLokalesBezugssystem}
+		\subsection{Zusammenfassung}
+			\input{TheoretischeGrundlagen-KugelkoordinatenUndIhreTransformationen-Zusammenfassung}
+\chapter{Der Prototyp als Konzept}\label{chap:der_prototyp_als_konzept}
+	\input{DerPrototypAlsKonzept}
+	\section{Beschreibung des Gesamtsystems}\label{sec:beschreibung_gesamtsystem}
+			\input{DerPrototypAlsKonzept-BeschreibungDesGesamtsystems}
+	\section{Teilaspekte}
+		\subsection{Voraussetzungen}
+			\input{DerPrototypAlsKonzept-Teilaspekte-Voraussetzungen}
+		\subsection{Installation und Kalibrierung}\label{subsec:installation_kalibrierung}
+			\input{DerPrototypAlsKonzept-Teilaspekte-InstallationUndKalibrierung}
+		\subsection{Erkennung}\label{subsec:erkennung}
+			\input{DerPrototypAlsKonzept-Teilaspekte-Erkennung}
+		\subsection{Abgleichen der Entdeckungen}\label{subsec:abgleichen_der_entdeckungen}
+			\input{DerPrototypAlsKonzept-Teilaspekte-AbgleichenDerEntdeckungen}
+		\subsection{Verortung}
+			\input{DerPrototypAlsKonzept-Teilaspekte-Verortung}
+		\subsection{Weitere Verarbeitung}
+			\input{DerPrototypAlsKonzept-Teilaspekte-WeitereVerarbeitung}
+\chapter{Der Prototyp in der Praxis, Versuch}\label{chap:der_prototyp_in_der_praxis_versuch}
+	\input{DerPrototypInDerPraxisVersuch}
+	\section{Programmierung}\label{sec:programmierung}
+		\input{DerPrototypInDerPraxisVersuch-Programmierung}
+	\section{Vorbereitung und Kalibrierung}
+		\input{DerPrototypInDerPraxisVersuch-VorbereitungUndKalibrierung}
+	\section{Durchführung}
+		\input{DerPrototypInDerPraxisVersuch-Durchführung}
+	\section{Auswertung und Ergebnisse}
+		\input{DerPrototypInDerPraxisVersuch-AuswertungUndErgebnisse}
+\chapter{Zusammenfassung und Ausblick}
+	\input{ZusammenfassungUndAusblick}
+	
+
+\printbibliography[title={Literaturverzeichnis},heading=bibintoc]
+
+\setcounter{secnumdepth}{-1} % hört mit Nummerierung bis zu Ebene Chapter auf
+\titleformat{\chapter}[block]{\normalfont\huge\bfseries}{\thechapter.}{1em}{}
+
+\chapter{Selbständigkeitserklärung}
+	\input{Selbständigkeitserklärung}
+
+\newgeometry{right=1.5cm,bottom=3cm, top=3cm} % \restoregeometry
+\chapter{Anhang}%\addcontentsline{toc}{chapter}{Anhang}
+	\section{Programmcode}%\addcontentsline{toc}{chapter}{Programmcode}	
+		\subsection{\texttt{calibration\_points.py}}
+			\inputminted[linenos,breaklines,tabsize=2,bgcolor=mybg,fontsize=\small]{python}{pretty_code/calibration_points.py}
+		\subsection{\texttt{calibration.py}}
+			\inputminted[linenos,breaklines,tabsize=2,bgcolor=mybg,fontsize=\small]{python}{pretty_code/calibration.py}
+		\subsection{\texttt{detection\_matching\_triangulation.py}}
+			\inputminted[linenos,breaklines,tabsize=2,bgcolor=mybg,fontsize=\small]{python}{pretty_code/detection_matching_triangulation.py}
+		\subsection{\texttt{helper\_functions.py}}
+			\inputminted[linenos,breaklines,tabsize=2,bgcolor=mybg,fontsize=\small]{python}{pretty_code/helper_functions.py}
+		\subsection{\texttt{average\_processing\_time.py}}
+			\inputminted[linenos,breaklines,tabsize=2,bgcolor=mybg,fontsize=\small]{python}{pretty_code/average_processing_time.py}
+	\section{Python-Skripte für Blender}%\addcontentsline{toc}{chapter}{Python-Skripte für Blender}
+		\subsection{\texttt{generate\_mesh.py}}
+			\inputminted[linenos,breaklines,tabsize=2,bgcolor=mybg,fontsize=\small]{python}{pretty_code/generate_mesh.py}
+		\subsection{\texttt{visualize\_calibration\_points.py}}
+			\inputminted[linenos,breaklines,tabsize=2,bgcolor=mybg,fontsize=\small]{python}{pretty_code/visualize_calibration_points.py}
+		\subsection{\texttt{visualize\_cameras.py}}
+			\inputminted[linenos,breaklines,tabsize=2,bgcolor=mybg,fontsize=\small]{python}{pretty_code/visualize_cameras.py}
+		\subsection{\texttt{visualize\_data.py}}
+			\inputminted[linenos,breaklines,tabsize=2,bgcolor=mybg,fontsize=\small]{python}{pretty_code/visualize_data.py}
+				
+
+\end{document}

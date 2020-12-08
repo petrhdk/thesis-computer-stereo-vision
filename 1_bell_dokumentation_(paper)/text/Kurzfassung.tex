@@ -1,0 +1,18 @@
+\vfill 
+
+{\bfseries\LARGE Kurzfassung}\\[20pt] 
+
+\begin{small}
+Neben dem automatisierten Fahren stellt vor allem das vernetzte Fahren einen großen Trend in der heutigen Verkehrsforschung dar. Hierbei wird besonders Wert auf den Informationsaustausch zwischen Verkehrsteilnehmern untereinander sowie zwischen Verkehrsteilnehmern und der Verkehrsinfrastruktur gelegt, denn durch eine breitere Informationsgrundlage können alle Beteiligten grundsätzlich qualifiziertere Entscheidungen treffen, wodurch Verkehrsfluss und -sicherheit positiv beeinflusst werden.\kleinerabstand
+
+\noindent Das Ziel der vorliegenden Arbeit war es, einen Prototyp für die automatisierte optische Erfassung und dreidimensionale Ortung von nicht-motorisierten Verkehrsteilnehmern mithilfe zweier Verkehrskameras zu entwickeln. Darauf folgend wurde ein Versuch in einer realen Verkehrssituation vorbereitet, durchgeführt und ausgewertet, wofür der Programmcode in der Programmiersprache Python implementiert werden sollte.\kleinerabstand
+
+\noindent Zur Erkennung der nicht-motorisierten Verkehrsteilnehmer wird ein quelloffener, auf Deep Learning basierender Object Detection Algorithmus fortlaufend auf die Bilder der beiden Verkehrskameras angewendet. Durch die bestimmte Pixel-Position eines solchen interessanten Objekts der Verkehrsszene auf den Bildern dieser beiden Kameras und unter Einbeziehung aller durch Kalibrierung bekannten Merkmale der Kameras wird auf die genaue Position des Verkehrsteilnehmers im dreidimensionalen Raum zurückgeschlossen. Diese Information kann dann im Rahmen der Car2Infrastructure Communication als Gefahrennachricht an sich unmittelbar in der Nähe befindende Kraftfahrzeuge gesendet und dort weiter verarbeitet werden.\kleinerabstand
+
+\noindent Im Mittelpunkt der Arbeit stand das Erarbeiten der notwendigen mathematischen Grundlagen für die beschriebene dreidimensionale Ortung eines Objekts auf der Grundlage von zwei überlappenden Kamerabildern. Bei der Entwicklung des Prototypenkonzepts und der Durchführung des Versuches spielten allerdings noch viele weitere theoretische und praktische Aspekte eine Rolle. Dazu zählten unter anderem die Kamerakalibrierung, das Ordnen der gefundenen interessanten Objekte zu korrespondierenden Paaren zwischen den Kamerabildern, das Rechnen mit Kugelkoordinaten, der Einsatz von externer Karten- und Visualisierungssoftware, sowie die Programmierung in Python.\kleinerabstand
+
+\noindent Der erarbeitete Prototyp erwies sich als wertvoller Beitrag zur Forschung am vernetzten Fahren, zum einen im Sinne des Versuches als Demonstrator und zum anderen als Grundlage für real einsetzbare Systeme.
+Gegenstand weiterer Forschung könnte die Vereinfachung des Kalibrierungsvorgangs, die Erhöhung der Genauigkeit und Zuverlässigkeit der 3D-Ortung, das Erfassen von Geschwindigkeitsinformationen und die Voraussage von Positionen der Verkehrsteilnehmer sein.
+\end{small}
+
+\vfill

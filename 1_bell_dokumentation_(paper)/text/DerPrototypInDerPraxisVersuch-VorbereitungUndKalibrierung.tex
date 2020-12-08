@@ -1,0 +1,32 @@
+Für den Versuch mussten zunächst einige Vorkehrungen getroffen werden, speziell galt es die erläuterten Hinweise des vorangegangenen Kapitels \ref{chap:der_prototyp_als_konzept} (\emph{Der Prototyp als Konzept}) einzuhalten.\kleinerabstand
+
+\noindent Das bedeutete erstens, dass als Verkehrssituation eine Kreuzung gewählt wurde, an der nicht-motorisierte Verkehrsteilnehmer schlecht von vorbeifahrenden Autos gesehen werden können. Die Kameras sollten zudem erhöht und beide auf die Szene gerichtet positioniert werden. Dies wurde durch den Zugang zu einem angrenzenden Gebäude realisiert. Die Kameras wurden auf festen Stativen installiert, um sicherzustellen, dass sich die Kameraparameter sich nach der Installation nicht mehr ändern würden, und aus zwei verschiedenen Fenstern gerichtet, wodurch der geforderte Abstand der beiden Kameras voneinander ausreichend gegeben war.\kleinerabstand
+
+\noindent Als Kamera-Hardware haben sich Smartphones, im konkreten Fall zwei Exemplare des Modells \en{Google Pixel}, besonders angeboten, weil sie aufgrund ihrer kleinen Optik allgemein sehr wenig optische Verzerrungen erzeugen. Dies ließ sich auch bei den beiden verwendeten Exemplaren feststellen.
+
+\begin{figure}[H]
+	\centering
+	\def\svgwidth{12cm}
+	\import{image/straight_lines/}{straight_lines.pdf_tex}
+	\caption{Geraden im Raum werden auch als Geraden abgebildet}
+	\label{fig:straight_lines}
+\end{figure}
+\kleinerabstand
+
+Bei dem Erwerb von Kalibrierungsdaten wurden zunächst elf markante Kalibrierungspunkte, in der Anzahl ein gutes Mittelmaß zwischen Genauigkeit und Aufwand, gewählt und unter Nutzung des offen zugänglichen Satellitenbild-Datensatzes \emph{Luft Sachsen aktuell} \cite{geosn} in dem Programm \emph{Java OpenStreetMap Editor (JOSM)} \cite{josm} markiert\footnote{vgl. Abbildung \ref{fig:josm}}. Dadurch konnten die genauen Längengrade und Breitengrade aller Kalibrierungspunkte bestimmt werden. Um nun die Höhe der Kalibrierungspunkte exakt zu bestimmen, wurden die Punkte anschließend in das Programm \emph{Magic Maps Tour Explorer 25 Deutschland} \cite{tourexplorer} importiert, dass mit amtlichen topographischen Daten arbeitet und über ein fein aufgelöstet Höhenmodell verfügt. Abschließend mussten nur noch händisch die Pixel-Positionen der Kalibrierungspunkte auf jeweils einem Testbild ermittelt werden. Dazu lässt sich ein Bildbetrachtungs- oder Bildbearbeitungsprogramm nutzen.
+
+\begin{figure}[H]
+	\centering
+	\def\svgwidth{10cm}
+	\import{image/josm/}{josm.pdf_tex}
+	\caption{Lokalisierung der Kalibrierungspunkte auf dem Satellitenbild}
+	\label{fig:josm}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\def\svgwidth{10cm}
+	\import{image/calibration_points_sample_frame/}{calibration_points_sample_frame.pdf_tex}
+	\caption{Veranschaulichung der Lokalisierung der Kalibrierungspunkte in einem Testbild}
+	\label{fig:calibration_points_sample_frame}
+\end{figure}

@@ -1,0 +1,74 @@
+Der Prozess der Bildentstehung wird durch mathematische Gleichungen nachvollzogen, indem der beobachtete Punkt $p$ aus verschiedenen Perspektiven bzw. Bezugssystemen betrachtet wird. Mit Abbildungsmatrizen lässt sich zwischen den Bezugssystemen wechseln.\kleinerabstand
+
+{\noindent}Zunächst betrachtet man das dreidimensionale \emph{Welt-Bezugssystem} (Index $w$) in dem sich $p$ und die Kamera an bestimmter Position und mit bestimmter Orientierung befinden.
+
+{\noindent}Durch eine Translation und eine Drehung lässt sich der gleiche Punkt $p$ nun aus dem dreidimensionalen \emph{Kamera-Bezugssystem} (Index $k$) betrachten, dessen Koordinatenursprung auf dem Projektionszentrum der Kamera liegt. Die Z-Achse zeigt senkrecht nach vorne aus der Kamera, die x-y-Ebene liegt parallel zur Kamera-Bildebene.
+
+{\noindent}Als nächstes wird in das \emph{Bildebenen-Bezugssystem} (Index $b$) gewechselt, welches nur noch zweidimensional ist. Die x-y-Ebene liegt genau auf der Bildebene der Kamera mit dem Koordinatenursprung zentral auf dem Sensor, als auf der Z-Achse des Kamera-Bezugssystems. Die Koordinaten geben jetzt an, wo $p$ auf dieser Bildebene zusehen ist.
+
+{\noindent}Im letzten Schritt soll die Position des Punktes $p$ aus dem \emph{Sensor-Bezugssystem} (Index $s$) angegeben werden. Die x-y-Ebene des zwei-dimensionalen Bezugssystems liegt immer noch auf der Bildebene der Kamera, allerdings sollen die Koordinaten jetzt den letztlich relevanten Bildpunkt-Einheiten (Pixel) entsprechen. Dazu muss, ausgehend von den Koordinaten des Bildebenen-Bezugssystems, eine Verschiebung des Koordinatenursprungs und eine Achsenstreckung stattfinden.
+
+\begin{figure}[H]
+	\centering
+	\def\svgwidth{10cm}
+	\import{image/bezugssysteme/}{bezugssysteme.pdf_tex}
+	\caption[Übersicht zum Welt-Bezugssystem, Kamera-Bezugssystem, Bildebenen-Bezugssystem, Sensor-Bezugssystem]{Übersicht zum Welt-Bezugssystem ($w$), Kamera-Bezugssystem ($k$), Bildebenen-Bezugssystem ($b$), Sensor-Bezugssystem ($s$)}
+	\label{fig:bezugssysteme}
+\end{figure}
+
+\grosserabstand
+%[Formeln]
+Die oben beschriebenen Transformationen werden nun mit Abbildungsmatrizen für homogene Koordinaten beschrieben. Die Notation $^yH_x$ meint dabei den Wechsel vom Bezugsystem \emph{x} zum Bezugssystem \emph{y}. $^y\mathrm{X}_p$ meint die homogenen Koordinaten des Punktes $p$ im Bezugssystem \emph{y}.\\
+Ausgegangen wird vom Punkt $p$ in homogenen Koordinaten: $^w\mathrm{X}_p$ $=$ ($X$, $Y$, $Z$, $1$)$^T$.\kleinerabstand
+
+\noindent$^k\boldsymbol{H}_w$:\quad Zur Verschiebung des Koordinatenursprungs auf das Kameraprojektionszentrum werden die euklidischen Weltkoordinten $\mathsf{X}_0$ des Kameraprojektionszentrums von den Weltkoordinaten von $p$ subtrahiert. Erst anschließend findet eine Drehung um den neuen Koordinatenursprung mit der noch nicht weiter spezifizierten Drehmatrix $R_{3{\times}3}$ statt.
+\begin{equation}
+	^k\XH_p {\:\:}={\:\:} \begin{pmatrix}\boldsymbol{R}&0\\0^T&1\\\end{pmatrix} \begin{pmatrix}E_3&-\XC_0\\0^T&1\\\end{pmatrix} \cdot{^w\XH_p}
+\end{equation}
+\begin{equation}
+	^k\boldsymbol{H}_w {\:\:}={\:\:} \begin{pmatrix}\boldsymbol{R}&0\\0^T&1\\\end{pmatrix}\begin{pmatrix}E_3&-\XC_0\\0^T&1\\\end{pmatrix} {\:\:}={\:\:} \begin{pmatrix}\boldsymbol{R}&-\boldsymbol{R}\XC_0\\0^T&1\\\end{pmatrix}
+\end{equation}\kleinerabstand
+
+\noindent$^b\boldsymbol{H}_k$:\quad Diese Abbildung ist besonders, da von einem dreidimensionalem Bezugssystem in ein zwei-dimensionales gewechselt wird. Gesucht ist daher eine $3{\times}4\;$-Matrix. Zur Umsetzung wird der Strahlensatz herangezogen und man nehme sich zur Herleitung wiederum die euklidischen Koordinaten von $p$ vor: $^k\mathsf{X}_p$ $=$ ($X$, $Y$, $Z$)$^T$. Aus Sicht der Kamera\footnote{gemeint ist das Kamera-Bezugssystem} handelt es sich nämlich um eine zentrische Streckung, bei der $p$ auf der $Z$-Achse von $Z$ auf $c$ \footnote{$c$ ist die Kamerakonstante, siehe \ref{subsec:kameramodell} (\emph{Kameramodell})} gestaucht wird. Im gleichen Verhältnis wie $c$ zu $Z$ stehen auch die neuen $x$- und $y$-Bildebenen-Koordinaten zu ihren entsprechenden $X$- und $Y$-Koordinaten im Kamerabezugssystem. $X$ und $Y$ müssen daher mit dem Faktor $\frac{c}{Z}$ multipliziert werden, um auf die Bildebene projeziert zu werden. $Z$ entfällt, da das Bildebenen-Bezugssystem nur noch zwei Dimensionen hat. Genau das wird, wieder in homogenen Koordinaten ausgedrückt, durch die folgende Abbildungsmatrix erreicht:
+\begin{equation}
+	^b\boldsymbol{H}_k {\:\:}={\:\:} \begin{pmatrix}c&0&0&0\\0&c&0&0\\0&0&1&0\\\end{pmatrix}
+\end{equation}
+Denn:
+\begin{equation*}
+	\begin{pmatrix}c&0&0&0\\0&c&0&0\\0&0&1&0\\\end{pmatrix} \cdot\begin{pmatrix}X\\Y\\Z\\1\\\end{pmatrix} {\:\:}={\:\:} \begin{pmatrix}cX\\cY\\Z\\\end{pmatrix} {\:\:}={\:\:} \begin{pmatrix}\frac{c}{Z}{\cdot}X\\\frac{c}{Z}{\cdot}Y\\1\\\end{pmatrix}
+\end{equation*}\kleinerabstand
+
+\noindent$^s\boldsymbol{H}_b$:\quad Der Koordinatenursprung wird auf den Ursprung des Pixel-Ko\-or\-di\-na\-ten\-sys\-tems verlegt, indem der euklidische Ortsvektor des neuen Ursprungs ($x_s$, $y_s$)$^T$ von $^b\xH_p$ subtrahiert wird. Dann findet eine Achsenstreckung mit den beiden Faktoren $a_1$ und $a_2$ statt, die von der Pixelgröße auf dem Sensor abhängen. Bei quadratischen Pixeln ist $a_1$ gleich $a_2$.
+\begin{equation}
+	^s\boldsymbol{H}_b {\:\:}={\:\:} \begin{pmatrix}a_1&0&0\\0&a_2&0\\0&0&1\\\end{pmatrix} \begin{pmatrix}1&0&-x_s\\0&1&-y_s\\0&0&1\end{pmatrix} {\:\:}={\:\:} \begin{pmatrix}a_1&0&-a_1x_s\\0&a_2&-a_2y_s\\0&0&1\\\end{pmatrix}
+\end{equation}
+
+\grosserabstand
+Die erhaltenen Abbildungsmatrizen der einzelnen Transformationen lassen sich nun noch sinnvoll vereinen. Dabei werden alle Abbildungsmatrizen aneinandergereiht, um schließlich die gesamte Projektion vom Weltpunkt $^w\mathrm{X}_p$ zum Bildpunkt $^s\mathrm{x}_p$ darzustellen. Das Produkt aller drei Abbildungsmatrizen wird mit $P$ (\emph{Projektionsmatrix}) bezeichnet.
+\begin{align}
+	{^s\xH_p} {\:\:}&={\:\:} \boldsymbol{P}\cdot{^w\XH_p}\\
+	&={\:\:} {^s\boldsymbol{H}_b}\:{^b\boldsymbol{H}_k}\:{^k\boldsymbol{H}_w}\cdot{^w\XH_p}
+\end{align}\kleinerabstand
+
+{\noindent}Bei dieser Zusammenfassung der Transformtionen können Vereinfachung vorgenommen werden, zunächst bei dem Produkt aus $^bH_k$ und $^kH_w$.
+\begin{align*}
+	{^b\boldsymbol{H}_k}{^k\boldsymbol{H}_w} {\:\:}&={\:\:} \begin{pmatrix}c&0&0&\textcolor{mygray}{\not\,}0\\0&c&0&\textcolor{mygray}{\not\,}0\\0&0&1&\textcolor{mygray}{\not\,}0\\\end{pmatrix} \begin{pmatrix}\boldsymbol{R}&-\boldsymbol{R}\XC_0\\\textcolor{mygray}{\not\,}0^T&\textcolor{mygray}{\not\,}1\\\end{pmatrix}\\
+	&={\:\:}  \begin{pmatrix}c&0&0\\0&c&0\\0&0&1\\\end{pmatrix} \begin{pmatrix}\boldsymbol{R} \:\: | \: -\boldsymbol{R}\XC_0\\\end{pmatrix} \numberthisequation
+\end{align*}
+{\noindent}Es ergeben sich die beiden neuen Abbildungsmatrizen $^bH_k'$ und $^kH_w'$.
+\begin{equation}
+	^b\boldsymbol{H}_k' = \begin{pmatrix}c&0&0\\0&c&0\\0&0&1\\\end{pmatrix} \qquad ^k\boldsymbol{H}_w' = \begin{pmatrix}\boldsymbol{R} \:\: | \: -\boldsymbol{R}\XC_0\\\end{pmatrix}
+\end{equation}
+
+{\noindent}Weiterhin wird noch das Produkt von $^sH_b$ und $^bH_k'$ als $K$ zusammengefasst.
+\begin{align*}
+	\boldsymbol{K} {\:\:}={\:\:} {^s\boldsymbol{H}_b}{^b\boldsymbol{H}_k'} {\:\:}&={\:\:} \begin{pmatrix}a_1&0&-a_1x_s\\0&a_2&-a_2y_s\\0&0&1\\\end{pmatrix} \begin{pmatrix}c&0&0\\0&c&0\\0&0&1\\\end{pmatrix}\\
+	\boldsymbol{K} {\:\:}&={\:\:} \begin{pmatrix}ca_1&0&-a_1x_s\\0&ca_2&-a_2y_s\\0&0&1\\\end{pmatrix} \numberthisequation
+\end{align*}
+$K$ wird \emph{Kalibrierungsmatrix} genannt, weil sie allein nun alle inneren Kameraparameter\footnote{die für eine Kamera spezifischen Parameter, die nicht von der Orientierung der Kamera im Raum abhängig sind} beinhaltet ($c$, $a_1$, $a_2$, $x_s$, $y_s$). Der restliche Teil von $P$ enthält alle sogenannten äußeren Kameraparameter\footnote{die Parameter einer Kamera, die ihre Orientierung im Raum beschreiben bzw. davon abhängig sind} ($\mathsf{X_0}$, $R$).
+\begin{align*}
+	\boldsymbol{P} {\:\:}&={\:\:} {^s\boldsymbol{H}_b}\:{^b\boldsymbol{H}_k'}\:{^k\boldsymbol{H}_w'}\\
+	&={\:\:} \boldsymbol{K}\:{^k\boldsymbol{H}_w'}\\
+	&={\:\:} \boldsymbol{K}\begin{pmatrix}\boldsymbol{R} \:\: | \: -\boldsymbol{R}\XC_0\\\end{pmatrix}\\
+	\boldsymbol{P} {\:\:}&={\:\:} \boldsymbol{K}\:\boldsymbol{R}\:\begin{pmatrix}E_3 \:\: | \: -\XC_0\\\end{pmatrix} \numberthisequation\label{eq:zerlegungprojektionsmatrix}
+\end{align*}

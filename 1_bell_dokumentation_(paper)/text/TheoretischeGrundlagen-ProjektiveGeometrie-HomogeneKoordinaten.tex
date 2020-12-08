@@ -1,0 +1,77 @@
+%Zunächst muss Klarheit darüber bestehen, was mit den \emph{Euklidischen Koordinaten} gemeint ist, damit dann die Besonderheit der \emph{Homogenen Koordinaten} herausgestellt werden kann.
+
+%{\noindent}Euklidische Koordinaten sind die allgemein geläufigen, oder auch als "normal" bezeichneten, Koordinaten, die Element des Koordinatenraums $\mathbb{R}^{3}$ sind. Sie bezeichnen jeden Punkt im dreidimensionalem Raum
+
+Im Rahmen dieser Arbeit wird grundsätzlich zwischen zwei Typen von Koordinaten unterschieden, den \emph{euklidischen Koordinaten} und den \emph{homogenen Koordinaten}.\kleinerabstand
+
+\noindent Schreibweise:\qquad
+\begin{tabular}{r|c|c}
+	& $\mathbb{R}^2$ (2D) & $\mathbb{R}^3$ (3D) \\ \hline
+	Punkt in euklidischen Koordinaten & $\xC$ & $\XC$ \\ \hline
+	Punkt in homogenen Koordinaten & $\xH$ & $\XH$ \\ \hline
+\end{tabular}\mittelgrosserabstand
+
+Euklidische Koordinaten sind die allgemein geläufigen, oft auch als ``normal'' bezeichneten, Koordinaten, die einen Punkt im $n$-dimensionalen Raum eindeutig durch $n$ Koordinaten identifizieren. 
+\begin{equation}
+	\xC = \begin{pmatrix}x\\y\\\end{pmatrix} \qquad \XC = \begin{pmatrix}X\\Y\\Z\\\end{pmatrix}
+\end{equation}
+
+Bei den homogenen Koordinaten handelt es sich um eine alternative Darstellungsweise, bei dem im $n$-dimensionalen Raum nun $n+1$ Koordinaten verwendet werden, stets eine mehr als bei den euklidischen Koordinaten.
+\begin{equation}
+	\xH = \begin{pmatrix}u\\v\\w\\\end{pmatrix} \qquad \XH = \begin{pmatrix}U\\V\\W\\T\\\end{pmatrix}
+\end{equation}
+Die ersten $n$ davon stellen ein beliebiges Vielfaches der $n$ euklidischen Koordinaten dar, während die spezielle $n{+}1$-te homogene Koordinate den Faktor dieses Vielfachen angibt.
+
+{\noindent}Eine Umformung der euklidischen Koordinaten eines Punktes in seine homogenen Koordinaten ist damit in jedem Fall möglich.
+\begin{equation}
+	\begin{array}{c c c c}
+		\x: & \xC = \begin{pmatrix}x\\y\\\end{pmatrix} & \Longrightarrow & \xH = \begin{pmatrix}x\\y\\1\\\end{pmatrix} \overset{\text{bzw.}}{=} \begin{pmatrix}{\lambda}x\\{\lambda}y\\\lambda\\\end{pmatrix}\\[0.8cm]
+		\X: & \XC = \begin{pmatrix}X\\Y\\Z\\\end{pmatrix} & \Longrightarrow & \XH = \begin{pmatrix}X\\Y\\Z\\1\\\end{pmatrix} \overset{\text{bzw.}}{=} \begin{pmatrix}{\lambda}X\\{\lambda}Y\\{\lambda}Z\\\lambda\\\end{pmatrix}
+	\end{array}
+	\begin{pmatrix}\lambda\in\mathbb{R},\\\lambda\not=0\end{pmatrix}
+\end{equation}
+Im allgemeinen Fall kann ein und derselbe Punkt also durch unendlich viele verschiedene Zahlenwerte von homogenen Koordinaten beschrieben werden, die jeweils einem der beliebigen Vielfachen entsprechen.
+Alle verschiedenen homogenen Koordinaten-Tupel, die den gleichen Punkt beschreiben, werden als äquivalent betrachtet. Damit gilt allgemein bei homogenen Koordinaten:
+\begin{equation}\label{eq:skalierbarkeit}
+	\boldsymbol{\mathrm{x}} = \lambda\boldsymbol{\mathrm{x}} \text{\quad bzw. \quad} \boldsymbol{\mathrm{X}} = \lambda\boldsymbol{\mathrm{X}} \text{\qquad} \begin{pmatrix}\lambda\in\mathbb{R},\:\lambda\not=0\end{pmatrix}
+\end{equation}
+Dies ist ein grundlegender Unterschied zu den euklidischen Koordinaten bei denen ein Vielfaches im allgemeinen Fall nicht mehr den selben Punkt beschreibt.\kleinerabstand
+
+Die Umwandlung der homogenen Koordinaten eines Punktes in seine euklidischen Koordinaten ergibt sich, indem die homogenen Koordinaten in die einfache Form gebracht werden und letzte Koordinate entfällt.
+\begin{equation}\label{eq:einfache_form}
+	\begin{array}{c c c c}
+		\x: & \xH = \begin{pmatrix}u\\v\\w\\\end{pmatrix} = \sfrac{1}{w}\begin{pmatrix}u\\v\\w\\\end{pmatrix} = \begin{pmatrix}\sfrac{u}{w}\\\sfrac{v}{w}\\1\\\end{pmatrix} & \quad\Longrightarrow\quad & \xC = \begin{pmatrix}\sfrac{u}{w}\\\sfrac{v}{w}\\\end{pmatrix}\\
+		\X: & \XH = \begin{pmatrix}U\\V\\W\\T\\\end{pmatrix} = \sfrac{1}{T}\begin{pmatrix}U\\V\\W\\T\\\end{pmatrix} = \begin{pmatrix}\sfrac{U}{T}\\\sfrac{V}{T}\\\sfrac{W}{T}\\1\\\end{pmatrix} & \quad\Longrightarrow\quad & \XC = \begin{pmatrix}\sfrac{U}{T}\\\sfrac{V}{T}\\\sfrac{W}{T}\\\end{pmatrix}\\
+	\end{array}
+\end{equation}\mittelgrosserabstand
+
+Der größte Vorteil\footnote{auf diese Forschungsarbeit bezogen; weitere, in der Projektiven Geometrie sehr wichtigen, Vorteile der Verwendung homogener Koordinaten werden im Rahmen dieser Arbeit nicht betrachtet} der Punkt-Darstellung durch homogene Koordinaten liegt in der Vereinfachung mathematischer Gleichungen in der projektiven Geometrie. Für diese Arbeit bedeutsam ist hier vor allem die erweiterte Funktionalität von Abbildungsmatrizen. Es lässt sich zum Beispiel die Translation eines Punktes im zweidimensionalen Raum mit einer solchen Abbildungsmatrix durchführen, die bei euklidischen Koordinaten nur mit der Addition eines Verschiebungsvektors möglich wäre. %, was auch in Hinsicht auf die Software-Implementation relevant ist
+\begin{alignat}{4}
+		\text{euklidische Koordinaten:}\quad & \xC' & \:\:=\:\: & \xC+\begin{pmatrix}{\Delta}x\\{\Delta}y\\\end{pmatrix}\\
+		\text{homogene Koordinaten:}\quad & \xH' & \:\:=\:\: & \begin{pmatrix}1&0&{\Delta}x\\0&1&{\Delta}y\\0&0&1\end{pmatrix}\cdot\xH
+\end{alignat}
+{\noindent}Bei homogenen Koordinaten kann man sogar mit einer einzigen Abbildungsmatrix eine ganze projektive Transformation durchführen\footnote{all diese Operationen sind auch mit euklidischen Koordinaten durchführbar, jedoch stets mit erheblich höherem Aufwand verbunden}. Für den Rahmen dieser Arbeit reicht es aber zu wissen, wie der allgemeine Aufbau einer Abbildungsmatrix für eine Translation, Rotation und Achsenstreckung aussieht.
+
+\begin{equation}
+	\boldsymbol{H} = \begin{pmatrix}\boldsymbol{A}\boldsymbol{R}&\boldsymbol{t}\\0^{T}&1\\\end{pmatrix}
+\end{equation}
+\begin{align*}
+\text{Mit:\qquad} \boldsymbol{A}_{2{\times}2}=\begin{pmatrix}a_{1}&0\\0&a_{2}\\\end{pmatrix} \text{,\quad} \boldsymbol{R}_{2{\times}2}=\begin{pmatrix}r_{1}&r_{2}\\r_{3}&r_{4}\\\end{pmatrix} \text{,\quad} \boldsymbol{t}_{2{\times}1}=\begin{pmatrix}t_{1}\\t_{2}\\\end{pmatrix}
+\end{align*}
+\begin{align*}
+\text{bzw:\qquad} \boldsymbol{A}_{3{\times}3}=\begin{pmatrix}a_{1}&0&0\\0&a_{2}&0\\0&0&a_{3}\\\end{pmatrix} \text{,\quad} \boldsymbol{R}_{3{\times}3}=\begin{pmatrix}r_{1}&r_{2}&r_{3}\\r_{4}&r_{5}&r_{6}\\r_{7}&r_{8}&r_{9}\\\end{pmatrix} \text{,\quad} \boldsymbol{t}_{3{\times}1}=\begin{pmatrix}t_{1}\\t_{2}\\t_{3}\\\end{pmatrix}
+\end{align*}\begin{center}
+$a_i, r_i, t_i \in \mathbb{R}$
+\end{center}
+Die Abbildungsmatrix $H$ entspricht hierbei einer Rotation des Punktes um den Koordinatenursprung gemäß der Drehmatrix $R$ mit anschließender Achsenstreckung nach $A$ und abschließender Verschiebung entsprechend des euklidischen Vektors $t$.\kleinerabstand
+
+{\noindent}Dadurch, dass sich nun alle benötigten Transformationen mit Abbildungsmatrizen beschreiben lassen, werden Transformationen simpel verkettbar (durch linksseitige Matrixmultiplikation: $H'=H_2H_1$) und in manchen Fällen umkehrbar (durch die Bildung der Inverse: $H'=H^{-1}$).\kleinerabstand
+
+{\noindent}Weil die Multiplikation von homogenen Koordinaten mit $\lambda$ ($\lambda\in\mathbb{R},\:\lambda\not=0$) eine Äquivalenzumformung darstellt (vgl. Gleichung \ref{eq:skalierbarkeit}), gilt auch für die Abbildungsmatrizen homogener Koordinaten:
+\begin{equation}\label{eq:matrix_skalierbarkeit}
+	\boldsymbol{H} = \lambda\boldsymbol{H}
+\end{equation}
+
+
+
+%In gewisser Weise sind die Homogenen Koordinaten eines Punktes damit ein Bezeichner für die ganze sogenannte \emph{Projektive Gerade} durch den Koordinatenursprung und den Punkt selbst, daher die Bezeichnung als \emph{homogen} in der Projektiven Geometrie.

@@ -1,0 +1,45 @@
+Im letzten Schritt wird jetzt die Transformation vom euklidischen Koordinatensystem des globalen Bezugssystems (im Weiteren verkürzt ``globales Koordinatensystem'' genannt) zum euklidischen Koordinatensystem des lokalen Bezugssystems (im Weiteren verkürzt ``lokales Koordinatensystem'' genannt) erarbeitet. Dazu muss zunächst die Lage dieses lokalen Bezugssystems definiert werden.\\
+Das lokale Koordinatensystem soll mit seinen drei kartesischen Achsen so gelegen sein, dass der Ursprung auf der Erdoberfläche an einem festgelegten Ursprungspunkt $O_L$ lokalisiert ist und dann die X-Achse in Richtung Osten, die Y-Achse in Richtung Norden und die Z-Achse senkrecht zum Zenit zeigt.\kleinerabstand
+
+\begin{figure}[H]
+	\centering
+	\def\svgwidth{10.3cm}
+	\import{image/global_lokal/}{global_lokal.pdf_tex}
+	\caption[Globales Koordinatensystem und lokales Koordinatensystem]{Globales Koordinatensystem (Index $G$) und lokales Koordinatensystem (Index $L$);\\
+	Vektoren und Koordinaten im globalen Koordinatensystem mit $^*$ notiert, die im lokalen Koordinatensystem ohne Zusatz}
+	\label{fig:global_lokal}
+\end{figure}
+
+\noindent Da beide Koordinatensysteme kartesisch und rechtshändig sind, sowie den gleichen Größenmaßstab haben, lässt sich die Transformation zwischen ihnen auf eine Translation, die Verschiebung des einen Koordinatenursprungs auf den anderen, und anschließende Rotation, formal gesehen ein Basiswechsel, vereinfachen.\\
+Die relative Beziehung zwischen beiden Koordinatenursprüngen für die Translation ist durch die Festlegung von $O_L$ gegeben. Es muss demnach nur noch der Basiswechsel nachvollzogen werden, welcher übersichtlich als Übergangsmatrix dargestellt wird. Dadurch muss auch nur der Basiswechsel in eine Richtung betrachtet werden, da die Inverse der Übergangsmatrix den Basiswechsel in die umgekehrte Richtung beschreibt.\\
+Am einfachsten ist der Basiswechsel vom lokalen zum globalen Koordinatensystem nachzuvollziehen. Dazu müssen die Basisvektoren des lokalen Koordinatensystems aus Sicht des globalen Koordinatensystems $e_X^*$, $e_Y^*$ und $e_Z^*$ ermittelt werden. Nach grundlegendem geometrischen Verständnis über Winkelfunktionen ergeben sich diese in Abhängigkeit vom Polarwinkel $\theta_{O_L}$ und Azimutwinkel $\varphi_{O_L}$ des lokalen Koordinatenursprungs $O_L$ im globalem Bezugssystem.\kleinerabstand
+
+\begin{equation}
+\begin{aligned}
+	\boldsymbol{e}_X^* = \begin{pmatrix}-\sin\varphi_{O_L}\\ \cos\varphi_{O_L}\\ 0\end{pmatrix}
+	&\qquad
+	\boldsymbol{e}_Y^* = \begin{pmatrix}-\cos\varphi_{O_L}\:\cos\theta_{O_L}\\ -\sin\varphi_{O_L}\:\cos\theta_{O_L}\\ \sin\theta_{O_L}\end{pmatrix}\\
+	\boldsymbol{e}_Z^* &= \begin{pmatrix}\cos\varphi_{O_L}\:\sin\theta_{O_L}\\ \sin\varphi_{O_L}\:\sin\theta_{O_L}\\ \cos\theta_{O_L}\end{pmatrix}
+\end{aligned}
+\end{equation}
+Der Basiswechsel erfolgt nun, in dem einfach die einzelnen Basisvektoren des lokalen Koordinatensystems mit ihrer zugehörigen lokalen Koordinate multipliziert werden, dann wird aufsummiert. Es wird dabei von einem beliebigen Punkt $X(X|Y|Z)$ \footnote{$X$, $Y$, $Z$ sind entsprechend Abbildung \ref{fig:global_lokal} die lokalen Koordinaten von $X$, weil sie ohne * notiert sind} ausgegangen. 
+%(Ortsvektor $\begin{pmatrix}X&Y&Z\end{pmatrix}^T=\overrightarrow{O_LX}$ bzw. $\begin{pmatrix}X^*&Y^*&Z^*\end{pmatrix}^T=\overrightarrow{O_GX}\mathrel{\raisebox{10pt}{$*$}}$) ausgegangen.
+\begin{equation}
+	\overrightarrow{O_LX}\mathrel{\raisebox{10pt}{$*$}} \:\:=\:\:  X{\cdot}\boldsymbol{e}_X^* + Y{\cdot}\boldsymbol{e}_Y^* + Z{\cdot}\boldsymbol{e}_Z^*
+\end{equation}
+Genau dies wird durch die Übergangsmatrix $D$ beschrieben:
+\begin{align}
+	\boldsymbol{D} = \begin{pmatrix}\boldsymbol{e}_X^* \:\:|\:\: \boldsymbol{e}_Y^* \:\:|\:\: \boldsymbol{e}_Z^*\end{pmatrix}\\
+	\overrightarrow{O_LX}\mathrel{\raisebox{10pt}{$*$}} \:\:=\:\: \boldsymbol{D}\cdot\overrightarrow{O_LX}
+\end{align}
+Die Transformation der lokalen Koordinaten eines Punktes $X$ zu seinen globalen ergibt sich unter Nutzung von $D$ als:
+\begin{equation}
+	\overrightarrow{O_GX}\mathrel{\raisebox{10pt}{$*$}} \:\:=\:\: \boldsymbol{D}\cdot\overrightarrow{O_LX} + \overrightarrow{O_GO_L}\mathrel{\raisebox{10pt}{$*$}}
+\end{equation}
+
+Wie schon angedeutet, ergibt sich die umgekehrte Transformation, vom globalen Koordinatensystem zum lokalen, dann mit der Inversen von $D$.
+\begin{equation}
+	\overrightarrow{O_LX} \:\:=\:\: \boldsymbol{D}^{-1}\cdot\left(\overrightarrow{O_GX}\mathrel{\raisebox{10pt}{$*$}} - \overrightarrow{O_GO_L}\mathrel{\raisebox{10pt}{$*$}}\right)
+\end{equation}
+
+

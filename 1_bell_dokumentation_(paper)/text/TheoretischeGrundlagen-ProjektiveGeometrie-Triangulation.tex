@@ -1,0 +1,101 @@
+Bei der sogenannten \emph{Triangulation} wird ein Obejekt durch die Kenntnis seiner Sensorkoordinaten zweier Kameras räumlich geortet (engl.: \en{Stereo Vision}). Denn, wie allgemein bekannt, kann eine einzelne Kamera nur Richtungsinformationen und keine Tiefeninformationen über einen gesehenen Gegenstand liefern. Durch zwei in ihrer Position verschiedene Kameras wird die Tiefeninformation aber berechenbar.\kleinerabstand
+
+Als erstes muss der Bildentstehungsprozess umgekehrt werden. Man erhält die Richtungs-Halbgerade, auf der der räumliche Punkt aus Sicht einer der Kameras liegen muss.\\
+Dazu wird der Bildpunkt in Sensorkoordinaten $\mathrm{x}=(x,y,1)^T$ zunächst mit der Inversen der Kalibrierungsmatrix $K$ multipliziert. Man gelangt formal vom Sensor-Koordinatensystem zum Kamerakoordinatensystem.
+\begin{equation}
+	\boldsymbol{K}^{-1}\cdot {^s\xH}
+\end{equation}
+Wichtig ist hier, dass man aufgrund der $3{\times}3$-Dimension von $K$ nicht die vier homogenen Koordinaten für die dreidimensionale Position des Punktes erhält\footnote{dafür müsste $K^{-1}$ an dieser Stelle eine $4{\times}3\;$-Matrix sein}, sondern nur die ersten drei dieser eigentlich vier homogenen Koordinaten. Ohne die vierte Koordinate kann man die ersten drei nicht zur einfachen Form normalisieren\footnote{vgl. Gleichung \ref{eq:einfache_form}} und bleibt mit dem bloßen Verhältnis von $X$, $Y$ und $Z$ des Punktes aus Sicht der Kamera zurück.
+\begin{equation*}
+	\boldsymbol{K}^{-1}\cdot{^s\xH} {\:\:}={\:\:} \lambda\: {^k\XC} \tag{\theequation$^\prime$}
+\end{equation*}
+$\lambda\: {^k\mathsf{X}}$ entspricht nun der Richtung, in der der Punkt aus Sicht der Kamera liegt, bzw. der angesprochenen Halbgeraden.\\
+Um den Richtungsvektor aus dem Kamera-Koordinatensystem nun noch in das Welt-Koordinatensystem zu übertragen, muss nur die Inverse $R^T$ der entsprechenden Drehmatrix $R$ linksseitig anmultipliziert werden.
+\begin{equation}\label{eq:gleichung_richtungsvektor}
+	\boldsymbol{a} = \boldsymbol{R}^T \boldsymbol{K}^{-1} \xH
+\end{equation}
+$a$ stellt jetzt im Welt-Koordinatensystem dar, in welche Richtung vom Kameraprojektionszentrum aus der gesehene Punkt liegt.
+Die Koordinaten Punktes im Raum $\mathsf{F}$ würden sich dann mithilfe der Position des Kameraprojektionszentrums $\mathsf{X}_0$ so angeben lassen:
+\begin{equation}\label{eq:gleichung_halbgerade}
+	\boldsymbol{\mathsf{F}} = \XC_0 + \lambda\:\boldsymbol{a}
+\end{equation}\kleinerabstand
+
+Jetzt werden beide Kameras zusammen betrachtet und es wird berücksichtigt, dass sich die Halbgeraden der beiden Kameras wegen Messungenauigkeiten bei der Kalibrierung und endlich genauer Erkennung durch den \en{Object Detection Algorithmus} nicht genau schneiden. Es ist daher der Punkt X gesucht, der zu beiden Halbgeraden den kürzesten und gleichen Abstand hat. Er lässt sich als Mittelpunkt der Abstandsstrecke zwischen beiden Halbgeraden konstruieren. Die Abstandstrecke schneidet die die Halbgeraden in den Punkten F und G und steht auf beiden senkrecht.\mittelgrosserabstand
+
+\begin{figure}[H]
+	\centering
+	\def\svgwidth{10cm}
+	\import{image/triangulation/}{triangulation.pdf_tex}
+	\caption{Geometrie der Triangulation}
+	\label{fig:triangulation}
+\end{figure}
+
+Die beschriebenen Zusammenhänge werden im Folgenden durch Gleichungen ausgedrückt und schließlich zur Lösung gebracht. Parameter der ersten Kamera werden mit einem Strich und die der zweiten mit zwei Strichen notiert.\kleinerabstand
+
+{\noindent}Die Richtungsvektoren $a$, $b$ der beiden Halbgeraden im Welt-Ko\-or\-di\-na\-ten\-sys\-tem ergeben sich analog zu \eqref{eq:gleichung_richtungsvektor} als:
+\begin{equation}
+	\boldsymbol{a} = \boldsymbol{R}'^T \boldsymbol{K}'^{-1} \xH'
+	\qquad\quad
+	\boldsymbol{b} = \boldsymbol{R}''^T \boldsymbol{K}''^{-1} \xH''
+\end{equation}
+F und G liegen jeweils auf einer der beiden Halbgeraden und ihre Koordinaten ergeben sich analog zu \eqref{eq:gleichung_halbgerade} daher als:
+\begin{equation}
+	\boldsymbol{\mathsf{F}} = \XC'_0 + \lambda\:\boldsymbol{a}
+	\qquad\quad
+	\boldsymbol{\mathsf{G}} = \XC''_0 + \mu\:\boldsymbol{b}
+\end{equation}
+Die Orthogonalität der Abstandstrecke zu den beiden Halbgeraden lässt sich jeweils über das Skalarprodukt beider Richtungsvektoren ausdrücken, welches nach Definition $0$ sein muss\footnote{bei einem Schnittwinkel von $90^\circ$ zweier Vektoren $u$ und $v$ wird deren Skalarprodukt $u \cdot v \:=\: |u||v|\cos(90^{\circ}) \:=\: 0$}.\kleinerabstand
+%\begin{center}\setlength{\fboxsep}{0.2cm}\fbox{\parbox{.92\columnwidth}{
+%\begin{equation}
+%	\text{Skalarprodukt bei $\theta{=}90^{\circ}$:}\qquad
+%	u \cdot v {\:}={\:} |u||v|\cos(90^{\circ}) \:=\: 0
+%\end{equation}
+%}}\end{center}
+
+\noindent Es lässt sich demnach folgendes Gleichungssystem aufstellen, dessen Lösung die unbekannten Variablen $\lambda$ und $\mu$ sind.
+\begin{align*}
+	&\left|
+	\begin{array}{lcl}
+		(\boldsymbol{\mathsf{F}}-\boldsymbol{\mathsf{G}})\cdot\boldsymbol{a} & = & 0\\
+		(\boldsymbol{\mathsf{F}}-\boldsymbol{\mathsf{G}})\cdot\boldsymbol{b} & = & 0
+	\end{array}		
+	\right| \\[0.2cm]
+%
+	&\left|
+	\begin{array}{lcl}
+		(\XC'_0+\lambda\:\boldsymbol{a} - \XC''_0-\mu\:\boldsymbol{b}) \cdot\boldsymbol{a} & = & 0\\
+		(\XC'_0+\lambda\:\boldsymbol{a} - \XC''_0-\mu\:\boldsymbol{b}) \cdot\boldsymbol{b} & = & 0
+	\end{array}
+	\right| \\[0.2cm]
+%
+	&\left|
+	\begin{array}{lllcl}
+		(\XC'_0 -  \XC''_0)\cdot\boldsymbol{a} & + \lambda\:\boldsymbol{a}^2 & - \mu\:\boldsymbol{a}\cdot\boldsymbol{b} & = & 0\\
+		(\XC'_0 -  \XC''_0)\cdot\boldsymbol{b} & + \lambda\:\boldsymbol{a}\cdot\boldsymbol{b} & - \mu\:\boldsymbol{b}^2 & = & 0
+	\end{array} 
+	\right| \\[0.2cm]
+%
+	&\left|
+		\begin{array}{rrlcl}
+			\boldsymbol{a}^2\cdot\lambda & -\boldsymbol{a}\cdot\boldsymbol{b}\cdot\mu & +(\XC'_0 -  \XC''_0)\cdot\boldsymbol{a} & = & 0\\
+			\boldsymbol{a}\cdot\boldsymbol{b}\cdot\lambda & -\boldsymbol{b}^2\cdot\mu & +(\XC'_0 -  \XC''_0)\cdot\boldsymbol{b} & = & 0
+		\end{array} 
+		\right|
+\end{align*}\vspace{0.15cm}
+\begin{equation}
+	\begin{pmatrix}
+		\boldsymbol{a}^2 & -\boldsymbol{a}\cdot\boldsymbol{b}\\
+		\boldsymbol{a}\cdot\boldsymbol{b} & -\boldsymbol{b}^2
+	\end{pmatrix}
+	\:\begin{pmatrix}\lambda\\\mu\end{pmatrix}
+	\:\:=\:\:
+	\begin{pmatrix}
+		(\XC''_0 -  \XC'_0)\cdot\boldsymbol{a}\\
+		(\XC''_0 -  \XC'_0)\cdot\boldsymbol{b}
+	\end{pmatrix}
+\end{equation}\vspace{0.2cm}
+
+{\noindent}Die gesuchten euklidischen Koordinaten des Punktes im Raum $\mathsf{X}$ ergeben sich dann, wie erläutert, als arithmetisches Mittel von $\mathsf{F}$ und $\mathsf{G}$.
+\begin{equation}
+	\boldsymbol{\mathsf{X}} \:\:=\:\:  \sfrac{1}{\mspace{2mu}2} ( \XC'_0{+}\lambda\boldsymbol{a} \:+\: \XC''_0{+}\mu\boldsymbol{b} )
+\end{equation}

@@ -1,0 +1,51 @@
+Als erster Schritt werden die geographischen Koordinaten als Kugelkoordinaten verstanden, wodurch sie einfacher mathematisch handhabbar werden.\kleinerabstand
+
+\noindent Es ist anzumerken, dass das Modell einer Kugel eine Vereinfachung gegenüber den bei der Erdvermessung üblichen Referenz-Ellipsoiden darstellt. Die Form der Erde weicht nämlich nicht unerheblich von der einer Kugel ab. Die Kugelkoordinaten sind an dieser Stelle dennoch hilfreich in der Anwendung, da ihr Ziel hier nur die Konstruktion eines lokalen Koordinatensystems ist, aus dem auch wieder zu geographischen Koordinaten zurückgerechnet werden kann. Durch die kleine verwendete Größe des konstruierten lokalen Koordinatensystems hält sich der systematische Fehler hierbei in Grenzen und ist, besonders in Hinsicht auf den gewünschten Umfang dieser Arbeit, vernünftig einzugehen.\kleinerabstand
+
+%\begin{center}\setlength{\fboxsep}{0.7cm}\fbox{\parbox{.8\columnwidth}{
+Kugelkoordinaten, oder auch sphärische Koordinaten, sind räumliche Polarkoordinaten. Sie werden demnach mit zwei Winkeln, die die Richtung des Punktes vom Kugelmittelpunkt aus beschreiben, und dem Abstand vom Kugelmittelpunkt angegeben. Dabei handelt es sich um den vertikalen Polarwinkel $\theta$, den horizontalen Azimutwinkel $\varphi$ und den Radius $r$.\kleinerabstand
+
+\begin{figure}[H]
+	\centering
+	\def\svgwidth{7cm}
+	\import{image/kugelkoordinaten/}{kugelkoordinaten.pdf_tex}
+	\caption{Kugelkoordinatensystem}
+	\label{fig:kugelkoordinaten}
+\end{figure}
+
+%\noindent Die räumliche Position eines Punktes kann durch seine Kugelkoordinaten damit durch
+%\begin{equation}
+%	lalala
+%\end{equation}
+%beschrieben werden.\kleinerabstand
+
+Nun soll die Kugel des Kugelkoordinatensystems die Erde darstellen und das System der Kugelkoordinaten auf die geographischen Koordinaten angewendet werden. Die Äquatorebene des Kugelkoordinatensystems sei dazu identisch zur Äquatorebene der Erde und der Nord- und Südpol der Erde liege auf der Polachse des Kugelkoordinatensystems. Weiterhin sei das Kugelkoordinatensystem so definiert, dass der Azimutwinkel, wie der Längengrad bei den geographischen Koordinaten, vom Nullmeridian der Erde aus gemessen wird.\\
+
+\begin{figure}[H]
+	\centering
+	\def\svgwidth{8cm}
+	\import{image/kugelkoordinaten_erde/}{kugelkoordinaten_erde.pdf_tex}
+	\caption{Globales Kugelkoordinatensystem}
+	\label{fig:kugelkoordinaten_erde}
+\end{figure}
+
+\noindent Die Kugelkoordinaten sind den geographischen Koordinaten nun sehr ähnlich, aber noch nicht identisch. Es muss beachtet werden, dass der Breitengrad der geographischen Koordinaten vom Äquator aus gemessen wird, während der Polarwinkel der Kugelkoordinaten den vertikalen Winkel vom Nordpol aus meint, und dass der Radius bei den Kugelkoordinaten nicht identisch mit der Höhe über dem Nullniveau bei den geographischen Koordinaten ist. Hier muss noch der Abstand dieses Nullniveaus zum Erdmittelpunkt $r_0$ addiert werden.\\
+Für die Nordhalbkugel der Erde ergeben sich die Kugelkoordinaten aus den geographischen Koordinaten damit wie folgt:
+\begin{center}
+	\begin{tabular}{l P{2cm} l}
+		\textbf{geographische Koordinaten} & & \textbf{Kugelkoordinaten}\\[0.2cm]
+		Höhe über Nullniveau: $h$  & $\Longrightarrow$ & Radius: $r = r_0+h$ \\
+		Breitengrad: $b$ & $\Longrightarrow$ & Polarwinkel: $\theta = 90^\circ - b$\\
+		Längengrad: $l$ & $\Longrightarrow$ & Azimutwinkel: $\varphi = l$\\
+	\end{tabular}
+\end{center}
+
+\noindent Umgekehrt gilt für die Rückumformung:
+\begin{center}
+	\begin{tabular}{l P{2cm} l}
+		\textbf{Kugelkoordinaten} & & \textbf{geographische Koordinaten}\\[0.2cm]
+		Radius: $r$ & $\Longrightarrow$ & Höhe über Nullniveau: $h = r - r_0$\\
+		Polarwinkel: $\theta$ & $\Longrightarrow$ & Breitengrad: $b = 90^\circ - \theta$\\
+		Azimutwinkel: $\varphi$ & $\Longrightarrow$ & Längengrad: $l = l$\\
+	\end{tabular}
+\end{center}

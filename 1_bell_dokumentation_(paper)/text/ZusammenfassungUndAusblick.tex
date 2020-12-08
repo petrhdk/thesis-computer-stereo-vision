@@ -1,0 +1,13 @@
+
+
+Nachdem im ersten großen Teil der Dokumentation\footnote{Kapitel \ref{chap:theoretische_grundlagen} (\emph{Theoretische Grundlagen})} mit der detaillierten Betrachtung theoretischer Grundlagen wichtige Funktionsalgorithmen und technische Hilfsmittel erarbeitet wurden, konnte aus diesen im zweiten Hauptteil\footnote{Kapitel \ref{chap:der_prototyp_als_konzept} (\emph{Der Prototyp als Konzept})} ein allgemein einsetzbares Prototypenkonzept zur automatisierten optische Erfassung und dreidimensionale Ortung von nicht-motorisierten Verkehrsteilnehmern mithilfe von zwei Verkehrskameras zusammengesetzt werden, welches sich schließlich im dritten großen Abschnitt\footnote{Kapitel \ref{chap:der_prototyp_in_der_praxis_versuch} (\emph{Der Prototyp in der Praxis, Versuch})} in Python implementiert und in einem konkreten Versuch getestet als funktionstüchtiges und vielversprechendes System erwies.\kleinerabstand
+
+Der erarbeitete Prototyp stellt sich damit als wertvoller Beitrag zur Forschung am vernetzten Fahren, zum einen als Demonstrator und zum anderen als Grundlage für real einsetzbare Systeme, heraus.\\
+Auf der Basis dieser Forschungsarbeit könnte aus dem Prototypen, aus der Idee, eine hocheffiziente Lösung zur Erhöhung der Verkehrssicherheit im Rahmen der \en{Car2Infrastructure Communication} reifen. Dazu wären Verbesserungen an der grundsätzlichen Funktion Prototyps in verschiedenen Aspekten interesssant beziehungsweise notwendig zu erörtern:
+\begin{itemize}
+	\item die Vereinfachung des Kalibrierungsalgorithmus, sodass zum Beispiel weniger Kalibrierungspunkte benötigt werden oder die inneren Kameraparameter vollautomatisch unter Nutzung von Abgleichsalgorithmen wie dem \emph{RANSAC}-Algorithmus \cite{ransac} erhalten werden können
+	\item die Erhöhung der Zuverlässigkeit der Objekterkennung; hier wäre unter Anderem der Einsatz von mehreren Kameras gleichzeitig denkbar
+	\item die Einbeziehung weiterer Informationen zum Abgleichen der Detektionen, wie die Seitenverhältnisse der Detektionsrechtecke oder die Bildinformationen der Detektionen selber\footnote{zwei Bilder können mit sogenannten \en{Content-based image retrieval}-Algorithmen (\en{CBIR}) \cite{cbir}, die üblicherweise für Bilder-Suchmaschinen eingesetzt werden, auf Übereinstimmung geprüft werden}
+	%\item die Effizienzsteigerung des Programmcodes oder anderweitige Verkürzung der Laufzeit, zum Beispiel durch speziell angepasste Computer-Hardware
+	\item die Weiterverarbeitung der Analysedaten, zum Beispiel zur Ermittlung von Geschwindigkeitsinformationen oder zum Voraussage des Standorts mithilfe der bisherig bekannten Bewegungsrichtung
+\end{itemize}
